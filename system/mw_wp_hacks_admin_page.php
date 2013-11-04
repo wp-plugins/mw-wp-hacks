@@ -125,7 +125,7 @@ class mw_wp_hacks_admin_page {
 				?>
 				<table class="form-table">
 					<tr>
-						<th>Included Post Types in Main Feed</th>
+						<th><?php _e( 'Included Post Types in Main Feed', self::DOMAIN ); ?></th>
 						<td>
 							<div id="mwhacks-feed">
 								<p>
@@ -137,18 +137,18 @@ class mw_wp_hacks_admin_page {
 						</td>
 					</tr>
 					<tr>
-						<th>Text After Excerpt ( HTML )</th>
+						<th><?php _e( 'Text After Excerpt ( HTML )', self::DOMAIN ); ?></th>
 						<td>
 							<div id="mwhacks-excerpt">
 								<input type="text" name="<?php echo self::NAME; ?>-excerpt" value="<?php echo esc_attr( $excerpt ); ?>" size="50">
 								<p class="description">
-									%link% is converted to &lt;?php echo get_permalink(); ?&gt;
+									<?php _e( '%link% is converted to &lt;?php echo get_permalink(); ?&gt;', self::DOMAIN ); ?>
 								</p>
 							<!-- end #mwhacks-excerpt --></div>
 						</td>
 					</tr>
 					<tr>
-						<th>Social Account</th>
+						<th><?php _e( 'Social Account', self::DOMAIN ); ?></th>
 						<td>
 							<div id="mwhacks-social">
 								<table border="0" cellpadding="0" cellspacing="0" class="data">
@@ -169,7 +169,7 @@ class mw_wp_hacks_admin_page {
 						</td>
 					</tr>
 					<tr>
-						<th>Include Social Script</th>
+						<th><?php _e( 'Include Social Script', self::DOMAIN ); ?></th>
 						<td>
 							<div id="mwhacks-script">
 								<p>
@@ -189,7 +189,7 @@ class mw_wp_hacks_admin_page {
 						</td>
 					</tr>
 					<tr>
-						<th>Custom Thumbnail Sizes</th>
+						<th><?php _e( 'Custom Thumbnail Sizes', self::DOMAIN ); ?></th>
 						<td>
 							<div id="mwhacks-thumbnail">
 								<p>
@@ -226,7 +226,7 @@ class mw_wp_hacks_admin_page {
 						</td>
 					</tr>
 					<tr>
-						<th>Widget Areas</th>
+						<th><?php _e( 'Widget Areas', self::DOMAIN ); ?></th>
 						<td>
 							<p>
 								<span class="mwhacks-add button">Add</span>
