@@ -8,11 +8,11 @@ Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-MW WP Hacks is plugin to help with development in wordpress.
+MW WP Hacks is plugin to help with development in WordPress.
 
 == Description ==
 
-MW WP Hacks is plugin to help with development in wordpress.
+MW WP Hacks is plugin to help with development in WordPress.
 
 * Add Google Plus ID field in user profile page. IF input, echo &lt;link rel="author" /&gt; in &lt;head&gt;;
 * Custom Feed into any post types.
