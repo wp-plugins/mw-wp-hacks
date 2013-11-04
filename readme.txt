@@ -14,11 +14,11 @@ MW WP Hacks is plugin to help with development in wordpress.
 
 MW WP Hacks is plugin to help with development in wordpress.
 
-* Add Google Plus ID field in user profile page. IF input, echo <link rel="author" /> in <head>;
+* Add Google Plus ID field in user profile page. IF input, echo &lt;link rel="author" /&gt; in &lt;head&gt;;
 * Custom Feed into any post types.
 * Custom text after excerpt.
-* Add Google Plus ID field in management page. IF save this, include <link rel="publisher" /> in <head>.
-* Add Facebook AppID field in management page. IF save this, include <div id="fb-root"></div> any more.
+* Add Google Plus ID field in management page. IF save this, include &lt;link rel="publisher" /&gt; in &lt;head&gt;.
+* Add Facebook AppID field in management page. IF save this, include &lt;div id="fb-root"&gt;&lt;/div&gt; any more.
 * Add GA Tracking ID field in management page. IF save this, include Google Analytics tag.
 * Include any social scripts. ( Facebook, Twitter, Hatena Bookmark, Google+1 )
 * Define widget areas.
