@@ -4,7 +4,7 @@ Donate link:
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.6.1
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,9 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.2.1 =
+* Fix readme.txt
 
 = 0.2.0 =
 * Initial release.
