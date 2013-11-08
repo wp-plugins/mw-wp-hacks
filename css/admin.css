@@ -1,0 +1,36 @@
+.mwhacks-add {
+}
+
+.mwhacks-remove {
+	cursor: pointer;
+}
+
+table.data {
+	border-top: #ccc solid 1px;
+	border-right: #ccc solid 1px;
+	margin: 0 0 10px;
+	width: 100%;
+}
+table.data th,
+table.data td {
+	border-bottom: #ccc solid 1px;
+	border-left: #ccc solid 1px;
+	padding: 5px 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+table.data th {
+	background-color: #eee;
+}
+
+#mwhacks-social table.data td {
+	text-align: left;
+}
+
+#mwhacks-widget table.data th,
+#mwhacks-widget table.data td {
+	text-align: left;
+}
+#mwhacks-widget table.data td input {
+	width: 90%;
+}
