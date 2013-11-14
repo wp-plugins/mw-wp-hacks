@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.6.1
-Stable tag: 0.2.3
+Stable tag: 0.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ MW WP Hacks is plugin to help with development in WordPress.
 
 MW WP Hacks is plugin to help with development in WordPress.
 
-* Add Google Plus ID field in user profile page. IF input, echo &lt;link rel="author" /&gt; in &lt;head&gt;;
+* Add Google Plus ID field in user profile page. IF input, echo &lt;link rel="author" /&gt; in &lt;head&gt;.
 * Custom Feed into any post types.
 * Custom text after excerpt.
 * Add Google Plus ID field in management page. IF save this, include &lt;link rel="publisher" /&gt; in &lt;head&gt;.
@@ -37,6 +37,11 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.2.4 =
+* Bugfix: Undefined $facebook_app_id error.
+* Bugfix: Notice error in 404 page.
+* Bugfix: Can't delete meta box error.
 
 = 0.2.3 =
 * Supported less than php 5.3.

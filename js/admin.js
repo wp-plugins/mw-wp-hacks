@@ -1,13 +1,13 @@
 jQuery( function( $ ) {
 
-	var cnt = $( '.mwhacks-thumbnail-box' ).length;
+	var cnt = $( '#mwhacks-thumbnail' ).length + $( '#mwhacks-widget' ).length;
 
 	/**
 	 * 削除ボタン
 	 */
 	$( '.mwhacks-remove' ).on( 'click', function() {
 		cnt++;
-		$( this ).closest( 'tr' ).fadeOut( function() {
+		$( this ).closest( '.add-box' ).fadeOut( function() {
 			$( this ).remove();
 		} );
 	} );

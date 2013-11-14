@@ -3,11 +3,11 @@
  * Name: MW WP Hacks Admin Page
  * URI: http://2inc.org
  * Description: 管理画面
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : September 30, 2013
- * Modified: December 8, 2013
+ * Modified: December 14, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -117,7 +117,6 @@ class mw_wp_hacks_admin_page {
 
 				// Thumbnail
 				$thumbnails = get_option( self::NAME . '-thumbnail' );
-				$thumbnails = (array) $thumbnails;
 				// 空の隠れバリデーションフィールド（コピー元）を挿入
 				$thumbnail_keys = array(
 					'name' => '',
@@ -125,11 +124,13 @@ class mw_wp_hacks_admin_page {
 					'height' => 0,
 					'crop' => 0,
 				);
+				if ( empty( $thumbnails ) ) {
+					$thumbnails[] = $thumbnail_keys;
+				}
 				array_unshift( $thumbnails, $thumbnail_keys );
 
 				// Widget
 				$widgets = get_option( self::NAME . '-widget' );
-				$widgets = (array) $widgets;
 				// 空の隠れバリデーションフィールド（コピー元）を挿入
 				$widget_keys = array(
 					'name' => '',
@@ -140,6 +141,9 @@ class mw_wp_hacks_admin_page {
 					'before_title' => '',
 					'after_title' => '',
 				);
+				if ( empty( $widgets ) ) {
+					$widgets[] = $widget_keys;
+				}
 				array_unshift( $widgets, $widget_keys );
 
 				// Social Account
@@ -152,6 +156,8 @@ class mw_wp_hacks_admin_page {
 				$socials = (array) $socials;
 				if ( $socials ) {
 					$socials = array_merge( $socials_default, $socials );
+				} else {
+					$socials = $socials_default;
 				}
 
 				// Social Script
@@ -327,6 +333,8 @@ class mw_wp_hacks_admin_page {
 	}
 	public function sanitize_thumbnail( $data ) {
 		$thumbnails = array();
+		if ( !is_array( $data ) )
+			return;
 		foreach ( $data as $value ) {
 			if ( !isset( $value['name'], $value['width'], $value['height'], $value['crop'] ) )
 				continue;
@@ -346,6 +354,8 @@ class mw_wp_hacks_admin_page {
 	}
 	public function sanitize_widget( $data ) {
 		$widgets = array();
+		if ( !is_array( $data ) )
+			return;
 		foreach ( $data as $value ) {
 			if ( !isset( $value['name'], $value['id'], $value['description'], $value['before_widget'], $value['after_widget'], $value['before_title'], $value['after_title'] ) )
 				continue;
@@ -370,19 +380,21 @@ class mw_wp_hacks_admin_page {
 			return $widgets;
 	}
 	public function sanitize_social( $data ) {
-			$socials = array();
-			if ( isset( $data['facebook_app_id'] ) ) {
-				if ( preg_match( '/^\d+$/', $data['facebook_app_id'] ) )
-					$socials['facebook_app_id'] = $data['facebook_app_id'];
-			}
-			if ( isset( $data['ga_tracking_id'] ) ) {
-				if ( preg_match( '/^UA\-\d+?\-\d+$/', $data['ga_tracking_id'] ) )
-					$socials['ga_tracking_id'] = $data['ga_tracking_id'];
-			}
-			if ( isset( $data['google_plus_id'] ) ) {
-				if ( preg_match( '/^\d+$/', $data['google_plus_id'] ) )
-					$socials['google_plus_id'] = $data['google_plus_id'];
-			}
+		$socials = array();
+		if ( !is_array( $data ) )
+			return;
+		if ( isset( $data['facebook_app_id'] ) ) {
+			if ( preg_match( '/^\d+$/', $data['facebook_app_id'] ) )
+				$socials['facebook_app_id'] = $data['facebook_app_id'];
+		}
+		if ( isset( $data['ga_tracking_id'] ) ) {
+			if ( preg_match( '/^UA\-\d+?\-\d+$/', $data['ga_tracking_id'] ) )
+				$socials['ga_tracking_id'] = $data['ga_tracking_id'];
+		}
+		if ( isset( $data['google_plus_id'] ) ) {
+			if ( preg_match( '/^\d+$/', $data['google_plus_id'] ) )
+				$socials['google_plus_id'] = $data['google_plus_id'];
+		}
 		if ( !empty( $socials ) )
 			return $socials;
 	}

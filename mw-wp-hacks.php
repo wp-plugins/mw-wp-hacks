@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.2.3
+ * Version: 0.2.4
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: December 7, 2013
+ * Modified: December 13, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -117,7 +117,7 @@ class mw_wp_hacks {
 	}
 
 	public function facebook_root() {
-		$ga_tracking_id = '';
+		$facebook_app_id = '';
 		if ( !empty( $this->option['social']['facebook_app_id'] ) ) {
 			$facebook_app_id = $this->option['social']['facebook_app_id'];
 		}
@@ -415,7 +415,7 @@ class mw_wp_hacks {
 			?>
 			<link rel="publisher" href="https://plus.google.com/<?php echo esc_attr(  $this->option['social']['google_plus_id'] ); ?>/" />
 			<?php
-		} elseif ( get_user_meta( $post->post_author, self::NAME . '_google_plus_id', true ) != '' && is_singular() ) {
+		} elseif ( isset( $post->post_author ) && get_user_meta( $post->post_author, self::NAME . '_google_plus_id', true ) != '' && is_singular() ) {
 			?>
 			<link rel="author" href="https://plus.google.com/<?php echo esc_attr( get_user_meta( $post->post_author, self::NAME . '_google_plus_id', true ) ); ?>/" />
 			<?php
