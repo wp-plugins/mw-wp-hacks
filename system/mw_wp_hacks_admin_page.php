@@ -3,11 +3,11 @@
  * Name: MW WP Hacks Admin Page
  * URI: http://2inc.org
  * Description: 管理画面
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : September 30, 2013
- * Modified: December 14, 2013
+ * Modified: December 15, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -84,6 +84,7 @@ class mw_wp_hacks_admin_page {
 	public function setting() {
 		register_setting( self::NAME . '-group', self::NAME . '-feed',      array( $this, 'sanitize_feed' ) );
 		register_setting( self::NAME . '-group', self::NAME . '-excerpt',   array( $this, 'sanitize_excerpt' ) );
+		register_setting( self::NAME . '-group', self::NAME . '-excerptmore',   array( $this, 'sanitize_excerptmore' ) );
 		register_setting( self::NAME . '-group', self::NAME . '-social',    array( $this, 'sanitize_social' ) );
 		register_setting( self::NAME . '-group', self::NAME . '-script',    array( $this, 'sanitize_script' ) );
 		register_setting( self::NAME . '-group', self::NAME . '-thumbnail', array( $this, 'sanitize_thumbnail' ) );
@@ -110,10 +111,14 @@ class mw_wp_hacks_admin_page {
 
 				// Feed
 				$feed = get_option( self::NAME . '-feed' );
-				$feed = (array) $feed;
+				if ( !$feed )
+					$feed = array();
 
 				// Excerpt
 				$excerpt = get_option( self::NAME . '-excerpt' );
+
+				// Excerpt More
+				$excerptmore = get_option( self::NAME . '-excerptmore' );
 
 				// Thumbnail
 				$thumbnails = get_option( self::NAME . '-thumbnail' );
@@ -124,9 +129,8 @@ class mw_wp_hacks_admin_page {
 					'height' => 0,
 					'crop' => 0,
 				);
-				if ( empty( $thumbnails ) ) {
+				if ( empty( $thumbnails ) )
 					$thumbnails[] = $thumbnail_keys;
-				}
 				array_unshift( $thumbnails, $thumbnail_keys );
 
 				// Widget
@@ -153,8 +157,7 @@ class mw_wp_hacks_admin_page {
 					'google_plus_id' => '',
 				);
 				$socials = get_option( self::NAME . '-social' );
-				$socials = (array) $socials;
-				if ( $socials ) {
+				if ( $socials && is_array( $socials ) ) {
 					$socials = array_merge( $socials_default, $socials );
 				} else {
 					$socials = $socials_default;
@@ -162,7 +165,8 @@ class mw_wp_hacks_admin_page {
 
 				// Social Script
 				$scripts = get_option( self::NAME . '-script' );
-				$scripts = (array) $scripts;
+				if ( !$scripts )
+					$scripts = array();
 				?>
 				<table class="form-table">
 					<tr>
@@ -186,6 +190,14 @@ class mw_wp_hacks_admin_page {
 									<?php _e( '%link% is converted to &lt;?php echo get_permalink(); ?&gt;', self::DOMAIN ); ?>
 								</p>
 							<!-- end #mwhacks-excerpt --></div>
+						</td>
+					</tr>
+					<tr>
+						<th><?php _e( 'Text After Excerpt when an Excerpt was Cut ( HTML )', self::DOMAIN ); ?></th>
+						<td>
+							<div id="mwhacks-excerptmore">
+								<input type="text" name="<?php echo self::NAME; ?>-excerptmore" value="<?php echo esc_attr( $excerptmore ); ?>" size="20">
+							<!-- end #mwhacks-excerptmore --></div>
 						</td>
 					</tr>
 					<tr>
@@ -263,6 +275,9 @@ class mw_wp_hacks_admin_page {
 									</tr>
 									<?php endforeach; ?>
 								</table>
+								<p class="description">
+									<?php _e( 'When you want to use a thumbnail, firstly add "Thumbnail Size Name" is a thumbnail size of "post-thumbnail".', self::DOMAIN ); ?>
+								</p>
 							<!-- end #mwhacks-thumbnail --></div>
 						</td>
 					</tr>
@@ -293,7 +308,7 @@ class mw_wp_hacks_admin_page {
 											<th>before_widget</th>
 											<td><input type="text" name="<?php echo self::NAME; ?>-widget[<?php echo $key; ?>][before_widget]" value="<?php echo esc_attr( $value['before_widget'] ); ?>" size="30" />
 												<p class="description">
-													%1$s is converted to ID, %2$s is converted to Class.
+													<?php _e( '%1$s is converted to ID, %2$s is converted to Class.', self::DOMAIN ); ?>
 												</p>
 											</td>
 										</tr>
@@ -328,6 +343,10 @@ class mw_wp_hacks_admin_page {
 			return $data;
 	}
 	public function sanitize_excerpt( $data ) {
+		if ( !empty( $data ) && !is_array( $data ) )
+			return $data;
+	}
+	public function sanitize_excerptmore( $data ) {
 		if ( !empty( $data ) && !is_array( $data ) )
 			return $data;
 	}

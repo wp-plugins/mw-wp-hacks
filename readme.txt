@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.6.1
-Stable tag: 0.2.4
+Stable tag: 0.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,12 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.2.5 =
+* Add   : excerpt_more settiing.
+* Bugfix: 404 page title.
+* Change: Delete excerpt_length
+* Change: Added feed post type "post" when activate.
 
 = 0.2.4 =
 * Bugfix: Undefined $facebook_app_id error.

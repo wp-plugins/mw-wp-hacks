@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.2.4
+ * Version: 0.2.5
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: December 13, 2013
+ * Modified: December 15, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -45,6 +45,7 @@ class mw_wp_hacks {
 
 		$this->option['feed']      = get_option( self::NAME . '-feed' );
 		$this->option['excerpt']   = get_option( self::NAME . '-excerpt' );
+		$this->option['excerptmore']   = get_option( self::NAME . '-excerptmore' );
 		$this->option['social']    = get_option( self::NAME . '-social' );
 		$this->option['thumbnail'] = get_option( self::NAME . '-thumbnail' );
 		$this->option['widget']    = get_option( self::NAME . '-widget' );
@@ -61,6 +62,8 @@ class mw_wp_hacks {
 	 * 有効化した時の処理
 	 */
 	public static function activation() {
+		add_option( self::NAME . '-feed', array( 'post' ) );
+		add_option( self::NAME . '-excerptmore', '[...]' );
 	}
 
 	/**
@@ -70,6 +73,7 @@ class mw_wp_hacks {
 	public static function uninstall() {
 		delete_option( self::NAME . '-feed' );
 		delete_option( self::NAME . '-excerpt' );
+		delete_option( self::NAME . '-excerptmore' );
 		delete_option( self::NAME . '-social' );
 		delete_option( self::NAME . '-thumbnail' );
 		delete_option( self::NAME . '-widget' );
@@ -93,7 +97,6 @@ class mw_wp_hacks {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
 		add_filter( 'pre_get_posts', array( $this, 'set_rss_post_types' ) );
-		add_filter( 'excerpt_mblength', array( $this, 'excerpt_length' ) );
 		add_filter( 'excerpt_more', array( $this, 'excerpt_more' ) );
 		add_filter( 'wp_trim_excerpt', array( $this, 'wp_trim_excerpt' ) );
 		add_action( 'pre_get_posts', array( $this, 'display_only_self_uploaded_medias' ) );
@@ -228,7 +231,7 @@ class mw_wp_hacks {
 		if ( is_feed() ) {
 			$post_type = $query->get( 'post_type' );
 			if ( empty( $post_type ) ) {
-				if ( !empty( $this->option['feed'] ) && is_array( $this->option['feed'] ) ) {
+				if ( is_array( $this->option['feed'] ) ) {
 					$query->set( 'post_type', $this->option['feed'] );
 				}
 			}
@@ -237,19 +240,12 @@ class mw_wp_hacks {
 	}
 
 	/**
-	 * excerpt_length
-	 * returnが抜粋に表示される文字数
-	 */
-	public function excerpt_length( $length ) {
-		return 150;
-	}
-
-	/**
 	 * excerpt_more
 	 * 抜粋もしくは本文が一定の文字数を超えたときに実行される
 	 */
-	public function excerpt_more( $post ) {
-		return '...';
+	public function excerpt_more( $more ) {
+		$excerptmore = $this->option['excerptmore'];
+		return $excerptmore;
 	}
 
 	/**
@@ -324,7 +320,7 @@ class mw_wp_hacks {
 				$title = 'ページ' . max( $paged, $page ) . ' ' . $title;
 			}
 		}
-		if ( is_singular() || ( is_archive() && !is_paged() ) ) {
+		if ( is_singular() || is_404() || ( is_archive() && !is_paged() ) ) {
 			$title = str_replace( $sep, '', $title );
 			$title = trim( $title );
 		}
