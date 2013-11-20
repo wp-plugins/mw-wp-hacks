@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.6.1
-Stable tag: 0.2.5
+Stable tag: 0.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,7 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Add useful method: mw_wp_hacks::get_top_parent_id();
 * Add useful method: mw_wp_hacks::is_custom_post_type();
 * Add useful method: mw_wp_hacks::the_localNav();
+etc...
 
 == Installation ==
 
@@ -37,6 +38,10 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.2.6 =
+* Bugfix: 404 page title.
+* Add   : Hide link in custom post edit page when public => 'false'.
 
 = 0.2.5 =
 * Add   : excerpt_more settiing.

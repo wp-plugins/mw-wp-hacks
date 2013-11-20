@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.2.5
+ * Version: 0.2.6
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: December 15, 2013
+ * Modified: December 18, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -103,6 +103,7 @@ class mw_wp_hacks {
 		add_action( 'wp_ajax_query-attachments', array( $this, 'define_doing_query_attachment_const' ), 0 );
 		add_filter( 'img_caption_shortcode', array( $this, 'set_img_caption' ), 10, 3 );
 		add_action( 'wp_terms_checklist_args', array( $this, 'wp_category_terms_checklist_no_top' ) );
+		add_action( 'admin_head', array( $this, 'cpt_public_false' ) );
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'admin_post_thumbnail_html' ) );
 		add_action( 'wp_head', array( $this, 'add_profile_for_google_plus' ) );
 		add_filter( 'wp_footer', array( $this, 'social_button_footer' ) );
@@ -282,20 +283,6 @@ class mw_wp_hacks {
 	 */
 	public function wp_title( $title, $sep, $seplocation ) {
 		global $page, $paged;
-
-		$title = trim( $title );
-		$_sep = $sep;
-		$_sep = ' ' . $_sep . ' ';
-		/*
-		if ( !$sep && !is_front_page() ) {
-			if ( $seplocation == 'right' ) {
-				$title .= $_sep;
-			} else {
-				$title = $_sep . $title;
-			}
-		}
-		*/
-
 		if ( is_date() ) {
 			$title = '';
 			if ( $y = intval( get_query_var( 'year' ) ) )
@@ -305,32 +292,35 @@ class mw_wp_hacks {
 			if ( $d = intval( get_query_var( 'day' ) ) ) {
 				$title .= sprintf( '%2d日', $d );
 			}
-		}
-		if ( is_search() ) {
-			$title = str_replace( ':   ', ':', $title );
-			$title = str_replace( $sep, '', $title );
-			$title = preg_replace( '/検索結果\:/', '', $title );
-			$title = trim( $title );
-			$title = '検索結果: ' . $title;
-		}
-		if ( $paged >= 2 || $page >= 2 ) {
 			if ( $seplocation == 'right' ) {
-				$title .= ' ページ' . max( $paged, $page );
+				$title .= ' ' . $sep . ' ';
 			} else {
-				$title = 'ページ' . max( $paged, $page ) . ' ' . $title;
+				$title = ' ' . $sep . ' ' . $title;
 			}
 		}
-		if ( is_singular() || is_404() || ( is_archive() && !is_paged() ) ) {
-			$title = str_replace( $sep, '', $title );
+		elseif ( is_search() ) {
+			if ( $seplocation == 'right' ) {
+				$pattern = '/(.*?) ' . preg_quote( $sep ) . ' (検索結果\:)  (' . preg_quote( $sep ) . ' )$/';
+				$title = preg_replace( $pattern, '$2$1 $3', $title );
+			} else {
+				$pattern = '/^( ' . preg_quote( $sep ) . ' )(検索結果\:)  ' . preg_quote( $sep ) . '  (.*?)$/';
+				$title = preg_replace( $pattern, '$1$2 $3', $title );
+			}
+		}
+		elseif ( $paged >= 2 || $page >= 2 ) {
+			if ( $seplocation == 'right' ) {
+				$title .= 'ページ' . max( $paged, $page );
+			} else {
+				$title = 'ページ' . max( $paged, $page ) . $title;
+			}
+			if ( $seplocation == 'right' ) {
+				$title .= ' ' . $sep . ' ';
+			} else {
+				$title = ' ' . $sep . ' ' . $title;
+			}
+		}
+		if ( !$sep )
 			$title = trim( $title );
-		}
-		if ( $seplocation == 'right' ) {
-			if ( $sep && !is_front_page() )
-				$title .= $_sep;
-		} else {
-			if ( $sep && !is_front_page() )
-				$title = $_sep . $title;
-		}
 		return $title;
 	}
 
@@ -382,6 +372,35 @@ class mw_wp_hacks {
 	public function wp_category_terms_checklist_no_top( $args, $post_id = null ) {
 		$args['checked_ontop'] = false;
 		return $args;
+	}
+
+	/**
+	 * cpt_public_false
+	 * public => false なカスタム投稿タイプの場合は更新しましたのリンクを消す
+	 */
+	public function cpt_public_false() {
+		// カスタム投稿タイプのときだけ実行
+		$cpts = get_post_types( array(
+			'_builtin' => false,
+		) );
+		$pt = get_post_type();
+		if ( ! in_array( $pt, $cpts ) )
+			return;
+		// カスタム投稿タイプオブジェクトを取得
+		$pto = get_post_type_object( get_post_type() );
+		// public => false のとき
+		if ( isset( $pto->public ) && $pto->public == false ) {
+			?>
+			<style type="text/css">
+			.post-php #message a {
+				display: none;
+			}
+			.wp-list-table .post-title span.more-link {
+				display: none;
+			}
+			</style>
+			<?php
+		}
 	}
 
 	/**
