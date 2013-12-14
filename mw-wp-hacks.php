@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.2.6
+ * Version: 0.3.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: December 18, 2013
+ * Modified: December 14, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -30,9 +30,8 @@
 $mw_wp_hacks = new mw_wp_hacks();
 class mw_wp_hacks {
 
-	const NAME = 'mw-wp-hacks';
-	const DOMAIN = 'mw-wp-hacks';
 	private $option;
+	private $fields = array();
 
 	/**
 	 * __construct
@@ -43,18 +42,24 @@ class mw_wp_hacks {
 		// アンインストールした時の処理
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
 
-		$this->option['feed']      = get_option( self::NAME . '-feed' );
-		$this->option['excerpt']   = get_option( self::NAME . '-excerpt' );
-		$this->option['excerptmore']   = get_option( self::NAME . '-excerptmore' );
-		$this->option['social']    = get_option( self::NAME . '-social' );
-		$this->option['thumbnail'] = get_option( self::NAME . '-thumbnail' );
-		$this->option['widget']    = get_option( self::NAME . '-widget' );
-		$this->option['script']    = get_option( self::NAME . '-script' );
+		include_once( plugin_dir_path( __FILE__ ) . 'system/mwhacks_config.php' );
+		$this->fields = self::load_fields_classes();
 
 		add_action( 'init', array( $this, 'init' ) );
 		add_action( 'init', array( $this, 'set_content_width' ) );
-		add_action( 'init', array( $this, 'set_thumbnail' ) );
-		add_action( 'widgets_init', array( $this, 'widgets_init' ) );
+	}
+
+	public static function load_fields_classes() {
+		$fields = array();
+		include_once( plugin_dir_path( __FILE__ ) . 'system/abstract_mwhacks_base.php' );
+		foreach ( glob( plugin_dir_path( __FILE__ ) . 'field/*.php' ) as $field ) {
+			include_once $field;
+			$className = basename( $field, '.php' );
+			if ( class_exists( $className ) ) {
+				$fields[] = new $className();
+			}
+		}
+		return $fields;
 	}
 
 	/**
@@ -62,8 +67,10 @@ class mw_wp_hacks {
 	 * 有効化した時の処理
 	 */
 	public static function activation() {
-		add_option( self::NAME . '-feed', array( 'post' ) );
-		add_option( self::NAME . '-excerptmore', '[...]' );
+		$fields = self::load_fields_classes();
+		foreach ( $fields as $field ) {
+			$field->activation();
+		}
 	}
 
 	/**
@@ -71,16 +78,9 @@ class mw_wp_hacks {
 	 * アンインストールした時の処理
 	 */
 	public static function uninstall() {
-		delete_option( self::NAME . '-feed' );
-		delete_option( self::NAME . '-excerpt' );
-		delete_option( self::NAME . '-excerptmore' );
-		delete_option( self::NAME . '-social' );
-		delete_option( self::NAME . '-thumbnail' );
-		delete_option( self::NAME . '-widget' );
-		delete_option( self::NAME . '-script' );
-		$users = get_users();
-		foreach ( $users as $user ) {
-			delete_user_meta( $user->ID, self::NAME . '_google_plus_id' );
+		$fields = self::load_fields_classes();
+		foreach ( $fields as $field ) {
+			$field->uninstall();
 		}
 	}
 
@@ -88,7 +88,7 @@ class mw_wp_hacks {
 	 * init
 	 */
 	public function init() {
-		load_plugin_textdomain( self::DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( MWHACKS_Config::DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		remove_action( 'wp_head', 'wp_generator' );
 		add_post_type_support( 'page', 'excerpt' );
@@ -96,20 +96,13 @@ class mw_wp_hacks {
 
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
-		add_filter( 'pre_get_posts', array( $this, 'set_rss_post_types' ) );
-		add_filter( 'excerpt_more', array( $this, 'excerpt_more' ) );
-		add_filter( 'wp_trim_excerpt', array( $this, 'wp_trim_excerpt' ) );
 		add_action( 'pre_get_posts', array( $this, 'display_only_self_uploaded_medias' ) );
 		add_action( 'wp_ajax_query-attachments', array( $this, 'define_doing_query_attachment_const' ), 0 );
 		add_filter( 'img_caption_shortcode', array( $this, 'set_img_caption' ), 10, 3 );
 		add_action( 'wp_terms_checklist_args', array( $this, 'wp_category_terms_checklist_no_top' ) );
 		add_action( 'admin_head', array( $this, 'cpt_public_false' ) );
 		add_filter( 'admin_post_thumbnail_html', array( $this, 'admin_post_thumbnail_html' ) );
-		add_action( 'wp_head', array( $this, 'add_profile_for_google_plus' ) );
-		add_filter( 'wp_footer', array( $this, 'social_button_footer' ) );
-		add_filter( 'wp_footer', array( $this, 'facebook_root' ) );
-		add_filter( 'user_contactmethods', array( $this, 'add_custom_contactmethods' ) );
-		add_action( 'profile_update', array( $this, 'profile_update' ), 10, 2 );
+
 		if ( defined( 'WPLANG' ) && WPLANG === 'ja' ) {
 			add_filter( 'wp_title', array( $this, 'wp_title' ), 10, 3 );
 		}
@@ -120,86 +113,6 @@ class mw_wp_hacks {
 		new mw_wp_hacks_admin_page();
 	}
 
-	public function facebook_root() {
-		$facebook_app_id = '';
-		if ( !empty( $this->option['social']['facebook_app_id'] ) ) {
-			$facebook_app_id = $this->option['social']['facebook_app_id'];
-		}
-		if ( $facebook_app_id ) {
-			?>
-			<div id="fb-root"></div>
-			<script type="text/javascript">
-			window.fbAsyncInit = function() {
-				FB.init({
-					appId	: <?php echo esc_html( $facebook_app_id ); ?>, // App ID
-					status	: true, // check login status
-					cookie	: true, // enable cookies to allow the server to access the session
-					xfbml	: true  // parse XFBML
-				});
-			};
-			</script>
-			<?php
-		}
-	}
-
-	/**
-	 * ソーシャル等のスクリプトの非同期読込
-	 */
-	public function social_button_footer() {
-		$ga_tracking_id = '';
-		if ( !empty( $this->option['social']['ga_tracking_id'] ) ) {
-			$ga_tracking_id = $this->option['social']['ga_tracking_id'];
-		}
-		$scripts = array();
-		if ( !empty( $this->option['script'] ) && is_array( $this->option['script'] ) ) {
-			$scripts = $this->option['script'];
-		}
-		?>
-		<?php if ( $scripts || $ga_tracking_id ) : ?>
-		<script type="text/javascript">
-		( function( doc, script ) {
-			var js;
-			var fjs = doc.getElementsByTagName( script )[0];
-			var add = function( url, id, o ) {
-				if ( doc.getElementById( id ) ) { return; }
-				js = doc.createElement( script );
-				js.src = url; js.async = true; js.id = id;
-				fjs.parentNode.insertBefore( js, fjs );
-				if ( window.ActiveXObject && o != null ) {
-					js.onreadystatechange = function() {
-						if ( js.readyState == 'complete' ) o();
-						if ( js.readyState == 'loaded' ) o();
-					};
-				} else {
-					js.onload = o;
-				}
-			};
-			<?php if ( $ga_tracking_id ) : ?>
-			add( ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js', 'google-analytics', function() {
-				window._gaq = _gaq || [];
-				_gaq.push(['_setAccount', '<?php echo $ga_tracking_id; ?>']);
-				_gaq.push(['_trackPageview']);
-			} );
-			<?php endif; ?>
-			<?php if ( !empty( $scripts['facebook'] ) && $scripts['facebook'] == 'facebook' ) : ?>
-			add( '//connect.facebook.net/ja_JP/all.js', 'facebook-jssdk' );
-			<?php endif; ?>
-			<?php if ( !empty( $scripts['twitter'] ) && $scripts['twitter'] == 'twitter' ) : ?>
-			add( '//platform.twitter.com/widgets.js', 'twitter-wjs' );
-			<?php endif; ?>
-			<?php if ( !empty( $scripts['hatena'] ) && $scripts['hatena'] == 'hatena' ) : ?>
-			add( 'http://b.st-hatena.com/js/bookmark_button.js', 'hatena-js' );
-			<?php endif; ?>
-			<?php if ( !empty( $scripts['google'] ) && $scripts['google'] == 'google' ) : ?>
-			window.___gcfg = { lang: "ja" };
-			add( 'https://apis.google.com/js/plusone.js' );
-			<?php endif; ?>
-		}( document, 'script' ) );
-		</script>
-		<?php endif; ?>
-	<?php
-	}
-
 	/****************************************************************************/
 
 	/**
@@ -207,74 +120,8 @@ class mw_wp_hacks {
 	 */
 	public function set_content_width() {
 		global $content_width;
-		$width = apply_filters( self::NAME . '-content_width', get_option( 'large_size_w' ) );
+		$width = apply_filters( MWHACKS_Config::NAME . '-content_width', get_option( 'large_size_w' ) );
 		$content_width = $width;
-	}
-
-	/**
-	 * set_thumbnail
-	 */
-	public function set_thumbnail() {
-		if ( !empty( $this->option['thumbnail'] ) && is_array( $this->option['thumbnail'] ) ) {
-			add_theme_support( 'post-thumbnails' );
-			$thumbnails = $this->option['thumbnail'];
-			foreach ( $thumbnails as $thumbnail ) {
-				add_image_size( $thumbnail['name'], $thumbnail['width'], $thumbnail['height'], $thumbnail['crop'] );
-			}
-			//var_dump( get_intermediate_image_sizes() );
-		}
-	}
-
-	/**
-	 * set_rss_post_types
-	 */
-	public function set_rss_post_types( $query ) {
-		if ( is_feed() ) {
-			$post_type = $query->get( 'post_type' );
-			if ( empty( $post_type ) ) {
-				if ( is_array( $this->option['feed'] ) ) {
-					$query->set( 'post_type', $this->option['feed'] );
-				}
-			}
-			return $query;
-		}
-	}
-
-	/**
-	 * excerpt_more
-	 * 抜粋もしくは本文が一定の文字数を超えたときに実行される
-	 */
-	public function excerpt_more( $more ) {
-		$excerptmore = $this->option['excerptmore'];
-		return $excerptmore;
-	}
-
-	/**
-	 * wp_trim_excerpt
-	 * the_excerpt実行時に実行される
-	 */
-	public function wp_trim_excerpt( $excerpt ) {
-		global $post;
-		$more = '';
-		if ( !empty( $this->option['excerpt'] ) && !is_array( $this->option['excerpt'] ) ) {
-			$more = $this->option['excerpt'];
-			$more = preg_replace( '/%link%/', get_permalink(), $more );
-		}
-		return $excerpt . $more;
-	}
-
-	/**
-	 * widgets_init
-	 * 後で管理画面作成
-	 */
-	public function widgets_init() {
-		$widgets = array();
-		if ( !empty( $this->option['widget'] ) && is_array( $this->option['widget'] ) ) {
-			$widgets = $this->option['widget'];
-			foreach ( $widgets as $widget ) {
-				register_sidebar( $widget );
-			}
-		}
 	}
 
 	/**
@@ -420,40 +267,6 @@ class mw_wp_hacks {
 		return $content;
 	}
 
-	/**
-	 * add_profile_for_google_plus
-	 * Google+ 用の link タグを出力
-	 */
-	public function add_profile_for_google_plus() {
-		global $post;
-		if ( !empty( $this->option['social']['google_plus_id'] ) && !is_singular() ) {
-			?>
-			<link rel="publisher" href="https://plus.google.com/<?php echo esc_attr(  $this->option['social']['google_plus_id'] ); ?>/" />
-			<?php
-		} elseif ( isset( $post->post_author ) && get_user_meta( $post->post_author, self::NAME . '_google_plus_id', true ) != '' && is_singular() ) {
-			?>
-			<link rel="author" href="https://plus.google.com/<?php echo esc_attr( get_user_meta( $post->post_author, self::NAME . '_google_plus_id', true ) ); ?>/" />
-			<?php
-		}
-	}
-
-	/**
-	 * add_custom_contactmethods
-	 * 連絡先情報からAIM, YIM, Jabberを削除、Google+ IDを追加
-	 */
-	public function add_custom_contactmethods( $user_contactmethods ) {
-		return array(
-			self::NAME . '_google_plus_id' => 'Google+ ID'
-		);
-	}
-	public function profile_update( $user_id, $old_user_data ) {
-		if ( isset( $_POST[self::NAME . '_google_plus_id'] ) && preg_match( '/^\d+$/', $_POST[self::NAME . '_google_plus_id'] ) ) {
-			update_user_meta( $user_id, self::NAME . '_google_plus_id', $_POST[self::NAME . '_google_plus_id'] );
-		} else {
-			update_user_meta( $user_id, self::NAME . '_google_plus_id', '' );
-		}
-	}
-
 	/****************************************************************************/
 
 	/**
@@ -493,7 +306,7 @@ class mw_wp_hacks {
 		$ancectors = get_post_ancestors( $post );
 		$ancestor = 0;
 		if ( $ancectors )
-			$ancestor = array_pop( get_post_ancestors( $post ) );
+			$ancestor = @array_pop( get_post_ancestors( $post ) );
 		if ( !$ancestor )
 			return $post->ID;
 		return $ancestor;
@@ -629,9 +442,36 @@ class mw_wp_hacks {
 					</ul>
 				</dd>
 			</dl>
-		<!-- end .widget-container --></div>
+		<!-- end .localNav --></div>
 		<?php endforeach; ?>
 		<?php
+	}
+
+	/**
+	 * descriptionを取得
+	 * @param	Int 文字数
+	 * @return	String description
+	 */
+	public static function get_description( $strnum = 200 ) {
+		global $post;
+		$description = get_bloginfo( 'description' );
+		$site_description = $description;
+		if ( is_singular() && empty( $post->post_password ) ) {
+			if ( !empty( $post->post_excerpt ) ) {
+				$description = $post->post_excerpt;
+			} elseif ( !empty( $post->post_content ) ) {
+				$description = $post->post_content;
+			}
+		}
+		$description = strip_shortcodes( $description );
+		$description = str_replace( ']]>', ']]&gt;', $description );
+		$description = strip_tags( $description );
+		$description = str_replace( array( "\r\n","\r","\n" ), '', $description );
+		$description = mb_strimwidth( $description, 0, $strnum, "...", 'utf8' );
+		if ( empty( $description ) ) {
+			$description = $site_description;
+		}
+		return apply_filters( MWHACKS_Config::NAME . '-description', $description );
 	}
 }
 
