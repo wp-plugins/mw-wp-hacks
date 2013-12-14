@@ -3,11 +3,11 @@
  * Name: MW Hacks Social
  * URI: http://2inc.org
  * Description: social
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : December 15, 2013
- * Modified:
+ * Modified: December 15, 2013
  * License: GPL2
  *
  * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
@@ -170,6 +170,8 @@ class mwhacks_social extends abstract_mwhacks_base {
 	public function add_profile_for_google_plus() {
 		global $post;
 		$option = $this->get_option();
+		if ( empty( $post->post_author ) )
+			return;
 		$user_meta = get_user_meta( $post->post_author, $this->name_google_plus_id, true );
 		if ( !empty( $option['google_plus_id'] ) && !is_singular() ) {
 			?>
