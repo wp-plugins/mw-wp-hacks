@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 0.3.0\n"
+"Project-Id-Version: MW WP Hacks 0.4.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2013-12-14 12:09:01+00:00\n"
-"PO-Revision-Date: 2013-12-14 21:13+0900\n"
+"POT-Creation-Date: 2014-01-10 06:10:51+00:00\n"
+"PO-Revision-Date: 2014-01-10 15:13+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -15,17 +15,25 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.6.2\n"
+"X-Generator: Poedit 1.6.3\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: field/mwhacks_description.php:63
+#: field/mwhacks_description.php:85
 msgid "Description"
 msgstr ""
 
-#: field/mwhacks_description.php:67
+#: field/mwhacks_description.php:89
 msgid "Output meta description"
 msgstr "meta description を出力"
+
+#: field/mwhacks_description.php:93
+msgid "If this fields is empty, Tagline is used."
+msgstr "からの場合はキャッチコピーが使用されます。"
+
+#: field/mwhacks_description.php:97
+msgid "Basic"
+msgstr "基本"
 
 #: field/mwhacks_excerpt.php:60
 msgid "Text After Excerpt ( HTML )"
@@ -100,10 +108,8 @@ msgid "Save Changes"
 msgstr "保存する"
 
 #. Plugin Name of the plugin/theme
-#, fuzzy
 msgid "MW WP Hacks"
 msgstr ""
-"MW WP Formは確認画面付きのフォームを作成しメールを送信することができます。"
 
 #. Plugin URI of the plugin/theme
 #. Author URI of the plugin/theme

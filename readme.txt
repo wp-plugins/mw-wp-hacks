@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.8.0
-Stable tag: 0.3.1
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,9 +42,14 @@ etc...
 
 == Changelog ==
 
+= 0.4.0 =
+* Add   : Custom post archive page's meta description setting.
+
+= 0.3.0 =
+* Refactoring
+
 = 0.2.7 =
 * Add   : mw_wp_hacks::get_description();
-* Add   : mw_wp_hacks::the_description(); It is display meta description content.
 * Add   : Filter hook mw-wp-hacks-description.
 * Add   : OGP setting.
 * Add   : Google Site Verification setting.

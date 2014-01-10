@@ -28,6 +28,20 @@
 		}
 	}
 
+	#mw-wp-hacks-description {
+		.mw-wp-hacks-description-setting {
+			border-top: #ddd dotted 1px;
+			margin: 20px 0 0;
+			padding: 10px 0 0;
+			table {
+				th, td {
+					font-weight: normal;
+					padding: 10px 10px 10px 0;
+				}
+			}
+		}
+	}
+
 	#mw-wp-hacks-widget {
 		table.data {
 			td {
