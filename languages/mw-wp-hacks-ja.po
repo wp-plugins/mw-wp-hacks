@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 0.4.0\n"
+"Project-Id-Version: MW WP Hacks 0.4.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
 "POT-Creation-Date: 2014-01-10 06:10:51+00:00\n"
-"PO-Revision-Date: 2014-01-10 15:13+0900\n"
+"PO-Revision-Date: 2014-01-16 17:12+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.6.3\n"
+"X-Generator: Poedit 1.5.6\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
@@ -29,7 +29,7 @@ msgstr "meta description を出力"
 
 #: field/mwhacks_description.php:93
 msgid "If this fields is empty, Tagline is used."
-msgstr "からの場合はキャッチコピーが使用されます。"
+msgstr "空欄の場合はキャッチコピーが使用されます。"
 
 #: field/mwhacks_description.php:97
 msgid "Basic"
