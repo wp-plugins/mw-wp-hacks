@@ -3,14 +3,14 @@
  * Name: MW Hacks OGP
  * URI: http://2inc.org
  * Description: OGP
- * Version: 1.0.0
+ * Version: 1.0.2
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
- * Created : December 15, 2013
+ * Created : January 22, 2014
  * Modified:
  * License: GPL2
  *
- * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
+ * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -70,7 +70,6 @@ class mwhacks_ogp extends abstract_mwhacks_base {
 		$ogp_default = array(
 			'type' => 'blog',
 			'image' => '',
-			'locale' => 'ja_JP',
 		);
 		$ogp = $this->get_option();
 		if ( $ogp && is_array( $ogp ) ) {
@@ -140,85 +139,6 @@ class mwhacks_ogp extends abstract_mwhacks_base {
 							'article'
 						),
 					);
-					$locales = array(
-						'Afrikaans' => 'af_ZA',
-						'Arabic' => 'ar_AR',
-						'Azeri' => 'az_AZ',
-						'Belarusian' => 'be_BY',
-						'Bulgarian' => 'bg_BG',
-						'Bengali' => 'bn_IN',
-						'Bosnian' => 'bs_BA',
-						'Catalan' => 'ca_ES',
-						'Czech' => 'cs_CZ',
-						'Welsh' => 'cy_GB',
-						'Danish' => 'da_DK',
-						'German' => 'de_DE',
-						'Greek' => 'el_GR',
-						'English (UK)' => 'en_GB',
-						'English (Pirate)' => 'en_PI',
-						'English (Upside Down)' => 'en_UD',
-						'English (US)' => 'en_US',
-						'Esperanto' => 'eo_EO',
-						'Spanish (Spain)' => 'es_ES',
-						'Spanish' => 'es_LA',
-						'Estonian' => 'et_EE',
-						'Basque' => 'eu_ES',
-						'Persian' => 'fa_IR',
-						'Leet Speak' => 'fb_LT',
-						'Finnish' => 'fi_FI',
-						'Faroese' => 'fo_FO',
-						'French (Canada)' => 'fr_CA',
-						'French (France)' => 'fr_FR',
-						'Frisian' => 'fy_NL',
-						'Irish' => 'ga_IE',
-						'Galician' => 'gl_ES',
-						'Hebrew' => 'he_IL',
-						'Hindi' => 'hi_IN',
-						'Croatian' => 'hr_HR',
-						'Hungarian' => 'hu_HU',
-						'Armenian' => 'hy_AM',
-						'Indonesian' => 'id_ID',
-						'Icelandic' => 'is_IS',
-						'Italian' => 'it_IT',
-						'Japanese' => 'ja_JP',
-						'Georgian' => 'ka_GE',
-						'Khmer' => 'km_KH',
-						'Korean' => 'ko_KR',
-						'Kurdish' => 'ku_TR',
-						'Latin' => 'la_VA',
-						'Lithuanian' => 'lt_LT',
-						'Latvian' => 'lv_LV',
-						'Macedonian' => 'mk_MK',
-						'Malayalam' => 'ml_IN',
-						'Malay' => 'ms_MY',
-						'Norwegian (bokmal)' => 'nb_NO',
-						'Nepali' => 'ne_NP',
-						'Dutch' => 'nl_NL',
-						'Norwegian (nynorsk)' => 'nn_NO',
-						'Punjabi' => 'pa_IN',
-						'Polish' => 'pl_PL',
-						'Pashto' => 'ps_AF',
-						'Portuguese (Brazil)' => 'pt_BR',
-						'Portuguese (Portugal)' => 'pt_PT',
-						'Romanian' => 'ro_RO',
-						'Russian' => 'ru_RU',
-						'Slovak' => 'sk_SK',
-						'Slovenian' => 'sl_SI',
-						'Albanian' => 'sq_AL',
-						'Serbian' => 'sr_RS',
-						'Swedish' => 'sv_SE',
-						'Swahili' => 'sw_KE',
-						'Tamil' => 'ta_IN',
-						'Telugu' => 'te_IN',
-						'Thai' => 'th_TH',
-						'Filipino' => 'tl_PH',
-						'Turkish' => 'tr_TR',
-						'Ukrainian' => 'uk_UA',
-						'Vietnamese' => 'vi_VN',
-						'Simplified Chinese (China)' => 'zh_CN',
-						'Traditional Chinese (Hong Kong)' => 'zh_HK',
-						'Traditional Chinese (Taiwan)' => 'zh_TW'
-					);
 					?>
 					<table border="0" cellpadding="0" cellspacing="0" class="data">
 						<tr>
@@ -237,16 +157,6 @@ class mwhacks_ogp extends abstract_mwhacks_base {
 						<tr>
 							<th>og:image</th>
 							<td><?php echo home_url(); ?><input type="text" name="<?php echo $this->name; ?>[image]" value="<?php echo esc_attr( $ogp['image'] ); ?>" size="30" /></td>
-						</tr>
-						<tr>
-							<th>og:locale</th>
-							<td>
-								<select name="<?php echo $this->name; ?>[locale]">
-									<?php foreach ( $locales as $localeLbl => $locale ) : ?>
-									<option value="<?php echo esc_attr( $locale ); ?>"<?php selected( $ogp['locale'], $locale ); ?>><?php echo esc_html( $localeLbl ); ?></option>
-									<?php endforeach; ?>
-								</select>
-							</td>
 						</tr>
 					</table>
 				<!-- end #<?php echo $this->name; ?> --></div>
@@ -327,16 +237,14 @@ class mwhacks_ogp extends abstract_mwhacks_base {
 			<meta property="og:title" content="%s" />
 			<meta property="og:url" content="%s" />
 			<meta property="og:description" content="%s" />
-			<meta property="og:locale" content="%s" />
 			',
 			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-app_id', $facebook_app_id ) ),
 			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-type', $type ) ),
 			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-site_name', get_bloginfo( 'name' ) ) ),
 			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-image', $image ) ),
 			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-title', $title ) ),
-			esc_url( apply_filters( 'mw_ogp_url', $url ) ),
-			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-description', mw_wp_hacks::get_description() ) ),
-			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-locale', strtolower( $ogp['locale'] ) ) )
+			esc_url( apply_filters( MWHACKS_Config::NAME . '-ogp-url', $url ) ),
+			esc_attr( apply_filters( MWHACKS_Config::NAME . '-ogp-description', mw_wp_hacks::get_description() ) )
 		);
 	}
 

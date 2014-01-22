@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.8.0
-Stable tag: 0.4.1
+Stable tag: 0.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,6 +41,9 @@ etc...
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.4.2 =
+* Delete: Delete og:local setting.
 
 = 0.4.1 =
 * Bugfix: Fix japanese sentence mistake in settings page.
