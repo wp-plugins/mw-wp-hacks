@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.4.2
+ * Version: 0.4.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: January 22, 2013
+ * Modified: January 30, 2013
  * License: GPL2
  *
  * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
@@ -97,6 +97,7 @@ class mw_wp_hacks {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
 		add_action( 'pre_get_posts', array( $this, 'display_only_self_uploaded_medias' ) );
+		add_action( 'pre_get_posts', array( $this, 'fix_is_author_and_is_archive_post_type' ) );
 		add_action( 'wp_ajax_query-attachments', array( $this, 'define_doing_query_attachment_const' ), 0 );
 		add_filter( 'img_caption_shortcode', array( $this, 'set_img_caption' ), 10, 3 );
 		add_action( 'wp_terms_checklist_args', array( $this, 'wp_category_terms_checklist_no_top' ) );
@@ -179,6 +180,17 @@ class mw_wp_hacks {
 		if ( is_admin() && ( $wp_query->is_main_query() || ( defined( 'DOING_QUERY_ATTACHMENT' ) && DOING_QUERY_ATTACHMENT ) ) && $wp_query->get( 'post_type' ) == 'attachment' && !current_user_can( 'manage_options' ) ) {
 			$user = wp_get_current_user();
 			$wp_query->set( 'author', $user->ID );
+		}
+	}
+
+	/**
+	 * fix_is_author_and_is_archive_post_type
+	 */
+	public function fix_is_author_and_is_archive_post_type( $wp_query ) {
+		if ( is_admin() || !$wp_query->is_main_query() )
+			return;
+		if ( $wp_query->is_author && $wp_query->is_post_type_archive ) {
+			$wp_query->is_author = false;
 		}
 	}
 
