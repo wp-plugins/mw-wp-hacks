@@ -1,0 +1,25 @@
+.toplevel_page_mw_wp_hacks_admin_page .mwhacks-remove {
+  cursor: pointer; }
+.toplevel_page_mw_wp_hacks_admin_page table.form-table p {
+  margin: 0 0 5px; }
+.toplevel_page_mw_wp_hacks_admin_page table.data {
+  border-top: #cccccc solid 1px;
+  border-right: #cccccc solid 1px;
+  margin: 0 0 10px;
+  width: 100%; }
+  .toplevel_page_mw_wp_hacks_admin_page table.data th, .toplevel_page_mw_wp_hacks_admin_page table.data td {
+    border-bottom: #cccccc solid 1px;
+    border-left: #cccccc solid 1px;
+    padding: 5px 10px;
+    vertical-align: middle; }
+  .toplevel_page_mw_wp_hacks_admin_page table.data th {
+    background-color: #eee; }
+.toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting {
+  border-top: #dddddd dotted 1px;
+  margin: 20px 0 0;
+  padding: 10px 0 0; }
+  .toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting table th, .toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting table td {
+    font-weight: normal;
+    padding: 10px 10px 10px 0; }
+.toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-widget table.data td input {
+  width: 90%; }
