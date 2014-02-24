@@ -42,6 +42,9 @@ etc...
 
 == Changelog ==
 
+= 0.4.4 =
+* Change : Delete taxonomy name in wp_title() that to display tax name.
+
 = 0.4.3 =
 * Add   : In the case of the page where both is_author and is_post_tupe_archive are true, set is_author to a false.
 
