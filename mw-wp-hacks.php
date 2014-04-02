@@ -9,7 +9,7 @@
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: February 22, 2013
+ * Modified: April 2, 2014
  * License: GPL2
  *
  * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
@@ -153,15 +153,6 @@ class mw_wp_hacks {
 			} else {
 				$pattern = '/^( ' . preg_quote( $sep ) . ' )(検索結果\:)  ' . preg_quote( $sep ) . '  (.*?)$/';
 				$title = preg_replace( $pattern, '$1$2 $3', $title );
-			}
-		}
-		elseif ( is_tax() ) {
-			$term_obj = get_queried_object();
-			$title = $term_obj->name;
-			if ( $seplocation == 'right' ) {
-				$title .= ' ' . $sep . ' ';
-			} else {
-				$title = ' ' . $sep . ' ' . $title;
 			}
 		}
 		elseif ( $paged >= 2 || $page >= 2 ) {

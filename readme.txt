@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.8.0
-Stable tag: 0.4.3
+Stable tag: 0.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,7 +43,7 @@ etc...
 == Changelog ==
 
 = 0.4.4 =
-* Change : Delete taxonomy name in wp_title() that to display tax name.
+* Add   : Custom thumbnail size can be selected in media uploader.
 
 = 0.4.3 =
 * Add   : In the case of the page where both is_author and is_post_tupe_archive are true, set is_author to a false.

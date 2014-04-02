@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 0.4.1\n"
+"Project-Id-Version: MW WP Hacks 0.4.4\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2014-01-10 06:10:51+00:00\n"
-"PO-Revision-Date: 2014-01-16 17:12+0900\n"
+"POT-Creation-Date: 2014-04-02 15:45:05+00:00\n"
+"PO-Revision-Date: 2014-04-03 00:57+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -15,13 +15,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.6\n"
+"X-Generator: Poedit 1.6.4\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: ..\n"
 
 #: field/mwhacks_description.php:85
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: field/mwhacks_description.php:89
 msgid "Output meta description"
@@ -51,23 +51,23 @@ msgstr "抜粋が切れたときに抜粋の後に表示するテキスト（HTM
 msgid "Included Post Types in Main Feed"
 msgstr "メインフィードに表示する投稿タイプ"
 
-#: field/mwhacks_ogp.php:83
+#: field/mwhacks_ogp.php:82
 msgid "OGP"
-msgstr ""
+msgstr "OGP"
 
-#: field/mwhacks_ogp.php:355
+#: field/mwhacks_ogp.php:263
 msgid "OGP Image"
 msgstr "OGP画像"
 
-#: field/mwhacks_ogp.php:384 field/mwhacks_ogp.php:425
+#: field/mwhacks_ogp.php:292 field/mwhacks_ogp.php:333
 msgid "Set OGP Image"
 msgstr "OGP画像を設定"
 
-#: field/mwhacks_ogp.php:394
+#: field/mwhacks_ogp.php:302
 msgid "Delete OGP Image"
 msgstr "OGP画像を削除"
 
-#: field/mwhacks_ogp.php:398
+#: field/mwhacks_ogp.php:306
 msgid "Recommended image size of 1200 x 627"
 msgstr "推奨画像サイズ 1200 &times; 627"
 
@@ -79,17 +79,21 @@ msgstr "読み込むソーシャルJavaScript"
 msgid "Social Account"
 msgstr "ソーシャルアカウント"
 
-#: field/mwhacks_thumbnail.php:87
+#: field/mwhacks_thumbnail.php:92
 msgid "Custom Thumbnail Sizes"
 msgstr "カスタムサムネイルサイズ"
 
-#: field/mwhacks_thumbnail.php:121
+#: field/mwhacks_thumbnail.php:102
+msgid "Display Name"
+msgstr "表示名"
+
+#: field/mwhacks_thumbnail.php:128
 msgid ""
-"When you want to use a thumbnail, firstly add \"Thumbnail Size Name\" is a "
-"thumbnail size of \"post-thumbnail\"."
+"When you want to use a thumbnail, firstly add \"ID\" is a thumbnail size of "
+"\"post-thumbnail\"."
 msgstr ""
-"アイキャッチ画像を使用したいときは、まず「Thumbnail Size Name」が「post-"
-"thumbnail」のサムネイルサイズを登録してください。"
+"アイキャッチ画像を使用したいときは、まず「ID」が「post-thumbnail」のサムネイ"
+"ルサイズを登録してください。"
 
 #: field/mwhacks_widget.php:97
 msgid "Widget Areas"
@@ -109,10 +113,9 @@ msgstr "保存する"
 
 #. Plugin Name of the plugin/theme
 msgid "MW WP Hacks"
-msgstr ""
+msgstr "MW WP Hacks"
 
 #. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
 msgid "http://2inc.org"
 msgstr ""
 
