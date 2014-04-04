@@ -3,14 +3,14 @@
  * Name: MW Hacks Thumbnail
  * URI: http://2inc.org
  * Description: thumbnail
- * Version: 1.1.0
+ * Version: 1.0.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : December 15, 2013
- * Modified: April 2, 2014
+ * Modified:
  * License: GPL2
  *
- * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
+ * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -39,7 +39,6 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 	 */
 	public function init() {
 		add_action( 'init', array( $this, 'set_thumbnail' ) );
-		add_filter( 'image_size_names_choose', array( $this, 'add_custom_image_size_select' ) );
 	}
 
 	/**
@@ -76,14 +75,10 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 		// 空の隠れバリデーションフィールド（コピー元）を挿入
 		$thumbnail_keys = array(
 			'name' => '',
-			'display' => '',
 			'width' => 0,
 			'height' => 0,
 			'crop' => 0,
 		);
-		foreach ( $thumbnails as $key => $thumbnail ) {
-			$thumbnails[$key] = array_merge( $thumbnail_keys, $thumbnail );
-		}
 		if ( empty( $thumbnails ) )
 			$thumbnails[] = $thumbnail_keys;
 		array_unshift( $thumbnails, $thumbnail_keys );
@@ -98,8 +93,7 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 					<table border="0" cellpadding="0" cellspacing="0" class="data">
 						<tr>
 							<th style="width:1%">&nbsp;</th>
-							<th>ID</th>
-							<th><?php _e( 'Display Name', MWHACKS_Config::DOMAIN ); ?></th>
+							<th>Thumbnail Size Name</th>
 							<th style="width:20%">Width</th>
 							<th style="width:20%">Height</th>
 							<th style="width:20%">Crop</th>
@@ -107,8 +101,7 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 						<?php foreach ( $thumbnails as $key => $value ) : ?>
 						<tr class="add-box" <?php if ( $key === 0 ) : ?> style="display:none"<?php endif; ?>>
 							<td><span class="mwhacks-remove">x</span></td>
-							<td><input type="text" name="<?php echo $this->name; ?>[<?php echo $key; ?>][name]" value="<?php echo esc_attr( $value['name'] ); ?>" size="10" /></td>
-							<td><input type="text" name="<?php echo $this->name; ?>[<?php echo $key; ?>][display]" value="<?php echo esc_attr( $value['display'] ); ?>" size="10" /></td>
+							<td><input type="text" name="<?php echo $this->name; ?>[<?php echo $key; ?>][name]" value="<?php echo esc_attr( $value['name'] ); ?>" size="20" /></td>
 							<td><input type="text" name="<?php echo $this->name; ?>[<?php echo $key; ?>][width]" value="<?php echo esc_attr( $value['width'] ); ?>" size="4" />px</td>
 							<td><input type="text" name="<?php echo $this->name; ?>[<?php echo $key; ?>][height]" value="<?php echo esc_attr( $value['height'] ); ?>" size="4" />px</td>
 							<td>
@@ -125,7 +118,7 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 						<?php endforeach; ?>
 					</table>
 					<p class="description">
-						<?php _e( 'When you want to use a thumbnail, firstly add "ID" is a thumbnail size of "post-thumbnail".', MWHACKS_Config::DOMAIN ); ?>
+						<?php _e( 'When you want to use a thumbnail, firstly add "Thumbnail Size Name" is a thumbnail size of "post-thumbnail".', MWHACKS_Config::DOMAIN ); ?>
 					</p>
 				<!-- end #<?php echo $this->name; ?> --></div>
 			</td>
@@ -146,22 +139,5 @@ class mwhacks_thumbnail extends abstract_mwhacks_base {
 			}
 			//var_dump( get_intermediate_image_sizes() );
 		}
-	}
-
-	/**
-	 * add_custom_image_size_select
-	 * @param array $size_names
-	 * @return array $size_names
-	 */
-	public function add_custom_image_size_select( $size_names ) {
-		$custom_sizes = $this->get_option();
-		foreach ( $custom_sizes as $custom_size => $custom_size_value ) {
-			$display = $custom_size_value['name'];
-			if ( !empty( $custom_size_value['display'] ) ) {
-				$display = $custom_size_value['display'];
-			}
-			$size_names[$custom_size_value['name']] = $display;
-		}
-		return $size_names;
 	}
 }

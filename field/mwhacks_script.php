@@ -3,14 +3,14 @@
  * Name: MW Hacks Script
  * URI: http://2inc.org
  * Description: script
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : December 15, 2013
- * Modified:
+ * Modified: April 4, 2014
  * License: GPL2
  *
- * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
+ * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -91,12 +91,16 @@ class mwhacks_script extends abstract_mwhacks_base {
 		if ( !empty( $social['ga_tracking_id'] ) ) {
 			$ga_tracking_id = $social['ga_tracking_id'];
 		}
+		$ua_tracking_id = '';
+		if ( !empty( $social['ua_tracking_id'] ) ) {
+			$ua_tracking_id = $social['ua_tracking_id'];
+		}
 		$scripts = array();
 		if ( !empty( $script ) && is_array( $script ) ) {
 			$scripts = $script;
 		}
 		?>
-		<?php if ( $scripts || $ga_tracking_id ) : ?>
+		<?php if ( $scripts || $ga_tracking_id || $ua_tracking_id ) : ?>
 		<script type="text/javascript">
 		( function( doc, script ) {
 			var js;
@@ -120,6 +124,12 @@ class mwhacks_script extends abstract_mwhacks_base {
 				window._gaq = _gaq || [];
 				_gaq.push(['_setAccount', '<?php echo $ga_tracking_id; ?>']);
 				_gaq.push(['_trackPageview']);
+			} );
+			<?php endif; ?>
+			<?php if ( $ua_tracking_id ) : ?>
+			add( '//www.google-analytics.com/analytics.js', 'ga', function() {
+				ga('create', '<?php echo $ua_tracking_id; ?>', 'auto');
+				ga('send', 'pageview');
 			} );
 			<?php endif; ?>
 			<?php if ( !empty( $scripts['facebook'] ) && $scripts['facebook'] == 'facebook' ) : ?>

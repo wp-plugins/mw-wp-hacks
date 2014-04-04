@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.8.0
-Stable tag: 0.4.4
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,6 +20,7 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Add Google Plus ID field in management page. IF save this, include &lt;link rel="publisher" /&gt; in &lt;head&gt;.
 * Add Facebook AppID field in management page. IF save this, include &lt;div id="fb-root"&gt;&lt;/div&gt; any more.
 * Add GA Tracking ID field in management page. IF save this, include Google Analytics tag.
+* Add UA Tracking ID field in management page. IF save this, include Universal Analytics tag.
 * Add OGP setting.
 * Add Google Site Verification setting.
 * Add Meta description setting.
@@ -42,8 +43,12 @@ etc...
 
 == Changelog ==
 
+= 0.5.0 =
+* Add   : Add Universal Analytics Tracking ID setting.
+
 = 0.4.4 =
 * Add   : Custom thumbnail size can be selected in media uploader.
+* Change: Delete taxonomy name in wp_title() that to display tax name.
 
 = 0.4.3 =
 * Add   : In the case of the page where both is_author and is_post_tupe_archive are true, set is_author to a false.

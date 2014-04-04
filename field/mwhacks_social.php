@@ -3,14 +3,14 @@
  * Name: MW Hacks Social
  * URI: http://2inc.org
  * Description: social
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : December 15, 2013
- * Modified: December 15, 2013
+ * Modified: April 4, 2014
  * License: GPL2
  *
- * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
+ * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -81,6 +81,10 @@ class mwhacks_social extends abstract_mwhacks_base {
 			if ( preg_match( '/^UA\-\d+?\-\d+$/', $data['ga_tracking_id'] ) )
 				$socials['ga_tracking_id'] = $data['ga_tracking_id'];
 		}
+		if ( isset( $data['ua_tracking_id'] ) ) {
+			if ( preg_match( '/^UA\-\d+?\-\d+$/', $data['ua_tracking_id'] ) )
+				$socials['ua_tracking_id'] = $data['ua_tracking_id'];
+		}
 		if ( isset( $data['google_plus_id'] ) ) {
 			if ( preg_match( '/^\d+$/', $data['google_plus_id'] ) )
 				$socials['google_plus_id'] = $data['google_plus_id'];
@@ -99,6 +103,7 @@ class mwhacks_social extends abstract_mwhacks_base {
 		$socials_default = array(
 			'facebook_app_id' => '',
 			'ga_tracking_id' => '',
+			'ua_tracking_id' => '',
 			'google_plus_id' => '',
 			'google_site_verification' => '',
 		);
@@ -121,6 +126,10 @@ class mwhacks_social extends abstract_mwhacks_base {
 						<tr>
 							<th>GA Tracking ID</th>
 							<td><input type="text" name="<?php echo $this->name; ?>[ga_tracking_id]" value="<?php echo esc_attr( $socials['ga_tracking_id'] ); ?>" size="50"></td>
+						</tr>
+						<tr>
+							<th>UA Tracking ID</th>
+							<td><input type="text" name="<?php echo $this->name; ?>[ua_tracking_id]" value="<?php echo esc_attr( $socials['ua_tracking_id'] ); ?>" size="50"></td>
 						</tr>
 						<tr>
 							<th>Google+ ID</th>

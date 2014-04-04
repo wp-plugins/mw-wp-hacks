@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: http://2inc.org
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.4.4
+ * Version: 0.5.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: April 2, 2014
+ * Modified: April 4, 2014
  * License: GPL2
  *
  * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
@@ -153,6 +153,15 @@ class mw_wp_hacks {
 			} else {
 				$pattern = '/^( ' . preg_quote( $sep ) . ' )(検索結果\:)  ' . preg_quote( $sep ) . '  (.*?)$/';
 				$title = preg_replace( $pattern, '$1$2 $3', $title );
+			}
+		}
+		elseif ( is_tax() ) {
+			$term_obj = get_queried_object();
+			$title = $term_obj->name;
+			if ( $seplocation == 'right' ) {
+				$title .= ' ' . $sep . ' ';
+			} else {
+				$title = ' ' . $sep . ' ' . $title;
 			}
 		}
 		elseif ( $paged >= 2 || $page >= 2 ) {
@@ -486,5 +495,3 @@ class mw_wp_hacks {
 		return apply_filters( MWHACKS_Config::NAME . '-description', $description );
 	}
 }
-
-
