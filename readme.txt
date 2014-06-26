@@ -3,8 +3,8 @@ Contributors: inc2734
 Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
-Tested up to: 3.8.0
-Stable tag: 0.5.0
+Tested up to: 3.9.1
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,10 @@ etc...
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.6.0 =
+* Add   : Facebook social script locale setting.
+* Add   : Google social script locale setting.
 
 = 0.5.0 =
 * Add   : Add Universal Analytics Tracking ID setting.

@@ -3,10 +3,10 @@
  * Name: MW Hacks OGP
  * URI: http://2inc.org
  * Description: OGP
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
- * Created : January 22, 2014
+ * Created : April 14, 2014
  * Modified:
  * License: GPL2
  *
@@ -368,11 +368,11 @@ class mwhacks_ogp extends abstract_mwhacks_base {
 		$_image_id = get_post_meta( $post->ID, MWHACKS_Config::NAME . '-ogp', true );
 		if ( !empty( $_image_id['ogp_image_id'] ) ) {
 			$image_id = $_image_id['ogp_image_id'];
+			$image_url = wp_get_attachment_image_src( $image_id, MWHACKS_Config::NAME . '_ogp_image', false );
 		} elseif ( function_exists( 'get_post_thumbnail_id' ) ) {
 			$image_id = get_post_thumbnail_id();
+			$image_url = wp_get_attachment_image_src( $image_id, 'post-thumbnail', false );
 		}
-		if ( !empty( $image_id ) )
-			$image_url = wp_get_attachment_image_src( $image_id, MWHACKS_Config::NAME . '_ogp_image', false );
 
 		if ( !empty( $image_url[0] ) ) {
 			$first_img = $image_url[0];
