@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 3.9.1
-Stable tag: 0.6.0
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,9 @@ etc...
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 0.6.1 =
+* Bugfix: Fix bug that display notice error in feed.
 
 = 0.6.0 =
 * Add   : Facebook social script locale setting.

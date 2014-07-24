@@ -3,14 +3,14 @@
  * Name: MW Hacks Feed
  * URI: http://2inc.org
  * Description: feed
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Created : December 15, 2013
- * Modified:
+ * Modified: July 24, 2014
  * License: GPL2
  *
- * Copyright 2013 Takashi Kitajima (email : inc@2inc.org)
+ * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License, version 2, as
@@ -82,7 +82,7 @@ class mwhacks_feed extends abstract_mwhacks_base {
 	 * @param object $query
 	 */
 	public function set_rss_post_types( $query ) {
-		if ( is_feed() ) {
+		if ( $query->is_feed ) {
 			$post_type = $query->get( 'post_type' );
 			if ( empty( $post_type ) ) {
 				$option = $this->get_option();
