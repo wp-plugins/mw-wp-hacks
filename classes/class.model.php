@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.0.0
+ * Version    : 1.0.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   :
+ * Modified   : November 24, 2014
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -446,10 +446,14 @@ class MW_WP_Hacks_Model {
 		$social  = $this->settings['Social']->get_option();
 		?>
 		<?php if ( $social['ua_tracking_id'] ) : ?>
-		<script src="//www.google-analytics.com/analytics.js" async>
-		ga('create', '<?php echo esc_js( $social["ua_tracking_id"] ); ?>', 'auto');
-		ga('require', 'displayfeatures');
-		ga('send', 'pageview');
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', '<?php echo esc_js( $social["ua_tracking_id"] ); ?>', 'auto');
+		  ga('send', 'pageview');
 		</script>
 		<?php elseif ( $social['ga_tracking_id'] ) : ?>
 		<script type="text/javascript">
