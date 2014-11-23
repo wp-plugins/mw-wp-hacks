@@ -1,25 +1,30 @@
-.toplevel_page_mw_wp_hacks_admin_page .mwhacks-remove {
+.toplevel_page_class-mw-wp-hacks-admin .mwhacks-remove {
   cursor: pointer; }
-.toplevel_page_mw_wp_hacks_admin_page table.form-table p {
+.toplevel_page_class-mw-wp-hacks-admin table.form-table p {
   margin: 0 0 5px; }
-.toplevel_page_mw_wp_hacks_admin_page table.data {
-  border-top: #cccccc solid 1px;
-  border-right: #cccccc solid 1px;
+.toplevel_page_class-mw-wp-hacks-admin table.data {
+  border-top: #ccc solid 1px;
+  border-right: #ccc solid 1px;
   margin: 0 0 10px;
   width: 100%; }
-  .toplevel_page_mw_wp_hacks_admin_page table.data th, .toplevel_page_mw_wp_hacks_admin_page table.data td {
-    border-bottom: #cccccc solid 1px;
-    border-left: #cccccc solid 1px;
+  .toplevel_page_class-mw-wp-hacks-admin table.data th, .toplevel_page_class-mw-wp-hacks-admin table.data td {
+    border-bottom: #ccc solid 1px;
+    border-left: #ccc solid 1px;
     padding: 5px 10px;
     vertical-align: middle; }
-  .toplevel_page_mw_wp_hacks_admin_page table.data th {
+    .toplevel_page_class-mw-wp-hacks-admin table.data th input, .toplevel_page_class-mw-wp-hacks-admin table.data td input {
+      width: 100%; }
+  .toplevel_page_class-mw-wp-hacks-admin table.data th {
     background-color: #eee; }
-.toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting {
-  border-top: #dddddd dotted 1px;
+.toplevel_page_class-mw-wp-hacks-admin #mw-wp-hacks-description .mw-wp-hacks-description-setting {
+  border-top: #ddd dotted 1px;
   margin: 20px 0 0;
   padding: 10px 0 0; }
-  .toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting table th, .toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-description .mw-wp-hacks-description-setting table td {
+  .toplevel_page_class-mw-wp-hacks-admin #mw-wp-hacks-description .mw-wp-hacks-description-setting table th, .toplevel_page_class-mw-wp-hacks-admin #mw-wp-hacks-description .mw-wp-hacks-description-setting table td {
     font-weight: normal;
-    padding: 10px 10px 10px 0; }
-.toplevel_page_mw_wp_hacks_admin_page #mw-wp-hacks-widget table.data td input {
+    padding: 10px 10px 10px 0;
+    vertical-align: middle; }
+.toplevel_page_class-mw-wp-hacks-admin #mw-wp-hacks-widget table.data td input {
   width: 90%; }
+
+/*# sourceMappingURL=admin.css.map */
