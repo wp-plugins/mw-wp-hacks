@@ -1,4 +1,4 @@
-.toplevel_page_mw_wp_hacks_admin_page {
+.toplevel_page_class-mw-wp-hacks-admin {
 	.mwhacks-add {
 	}
 
@@ -22,6 +22,9 @@
 			border-left: #ccc solid 1px;
 			padding: 5px 10px;
 			vertical-align: middle;
+			input {
+				width: 100%;
+			}
 		}
 		th {
 			background-color: #eee;
@@ -37,6 +40,7 @@
 				th, td {
 					font-weight: normal;
 					padding: 10px 10px 10px 0;
+					vertical-align: middle;
 				}
 			}
 		}
