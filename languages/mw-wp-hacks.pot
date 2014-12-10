@@ -169,7 +169,7 @@ msgid "Delete OGP Image"
 msgstr ""
 
 #: classes/class.setting-ogp.php:241
-msgid "Recommended image size of 1200 x 300"
+msgid "Recommended image size of 1200 x 630"
 msgstr ""
 
 #: classes/class.setting-script.php:199

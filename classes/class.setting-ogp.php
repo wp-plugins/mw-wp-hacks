@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Setting OGP
  * Description: 管理画面
- * Version    : 1.0.0
+ * Version    : 1.0.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   :
+ * Modified   : December 10, 2014
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -80,7 +80,7 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 		add_action( 'admin_head', array( $this, 'add_ogp_meta_box' ) );
 		add_action( 'save_post', array( $this, 'save_ogp' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-		add_image_size( MW_WP_Hacks_Config::NAME . '_ogp_image', 1200, 300, true );
+		add_image_size( MW_WP_Hacks_Config::NAME . '_ogp_image', 1200, 630, true );
 	}
 
 	/**
@@ -238,7 +238,7 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 		</a>
 		<input type="hidden" id="mwogp-hidden" name="<?php echo MW_WP_Hacks_Config::NAME; ?>-ogp[ogp_image_id]" value="<?php echo esc_attr( $ogp_image_id ); ?>" />
 		<p class="howto">
-			<?php esc_html_e( 'Recommended image size of 1200 x 300', 'mw-wp-hacks' ); ?>
+			<?php esc_html_e( 'Recommended image size of 1200 x 630', 'mw-wp-hacks' ); ?>
 		</p>
 		<?php
 	}
