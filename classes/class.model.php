@@ -2,7 +2,7 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.0.2
+ * Version    : 1.0.3
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
@@ -304,7 +304,13 @@ class MW_WP_Hacks_Model {
 			if ( empty( $post_type ) ) {
 				$option = $this->settings['Feed']->get_option();
 				if ( is_array( $option ) ) {
-					$query->set( 'post_type', $option );
+					$post_types = array();
+					foreach ( $option as $post_type_name => $bool ) {
+						if ( $bool === 'true' ) {
+							$post_types[] = $post_type_name;
+						}
+					}
+					$query->set( 'post_type', $post_types );
 				}
 			}
 		}
