@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.0.1
+ * Version    : 1.0.2
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : November 24, 2014
+ * Modified   : December 12, 2014
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -307,8 +307,8 @@ class MW_WP_Hacks_Model {
 					$query->set( 'post_type', $option );
 				}
 			}
-			return $query;
 		}
+		return $query;
 	}
 
 	/**
