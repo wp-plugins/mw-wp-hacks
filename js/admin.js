@@ -1,6 +1,6 @@
 jQuery( function( $ ) {
 
-	var cnt = $( '#mwhacks-thumbnail' ).length + $( '#mwhacks-widget' ).length;
+	var cnt = $( '#mw-wp-hacks-thumbnail .add-box' ).length + $( '#mw-wp-hacks-widget .add-box' ).length;
 
 	/**
 	 * 削除ボタン

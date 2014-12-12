@@ -1,75 +1,170 @@
 <?php
 /**
  * Plugin Name: MW WP Hacks
- * Plugin URI: http://2inc.org
+ * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 0.6.1
+ * Version: 1.0.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: July 24, 2014
- * License: GPL2
+ * Modified: December 12, 2014
+ * License: GPLv2
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  *
- * Copyright 2014 Takashi Kitajima (email : inc@2inc.org)
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License, version 2, as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * TODO: Facebook キャッシュのやつ
+ * TODO: パンくず動作確認
  */
-$mw_wp_hacks = new mw_wp_hacks();
-class mw_wp_hacks {
+class MW_WP_Hacks {
 
-	private $option;
-	private $fields = array();
+	/**
+	 * array $options
+	 */
+	protected $options;
+
+	/**
+	 * array $fields
+	 */
+	protected $fields = array();
 
 	/**
 	 * __construct
 	 */
 	public function __construct() {
-		// 有効化した時の処理
-		register_activation_hook( __FILE__, array( __CLASS__, 'activation' ) );
-		// アンインストールした時の処理
 		register_uninstall_hook( __FILE__, array( __CLASS__, 'uninstall' ) );
-
-		include_once( plugin_dir_path( __FILE__ ) . 'system/mwhacks_config.php' );
-		$this->fields = self::load_fields_classes();
-
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'init', array( $this, 'set_content_width' ) );
-	}
-
-	public static function load_fields_classes() {
-		$fields = array();
-		include_once( plugin_dir_path( __FILE__ ) . 'system/abstract_mwhacks_base.php' );
-		foreach ( glob( plugin_dir_path( __FILE__ ) . 'field/*.php' ) as $field ) {
-			include_once $field;
-			$className = basename( $field, '.php' );
-			if ( class_exists( $className ) ) {
-				$fields[] = new $className();
-			}
-		}
-		return $fields;
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 	}
 
 	/**
-	 * activation
-	 * 有効化した時の処理
+	 * plugins_loaded
 	 */
-	public static function activation() {
-		$fields = self::load_fields_classes();
-		foreach ( $fields as $field ) {
-			$field->activation();
+	public function plugins_loaded() {
+		load_plugin_textdomain( 'mw-wp-hacks', false, basename( dirname( __FILE__ ) ) . '/languages' );
+
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.config.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.mw-wp-hacks-admin.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.abstract-setting.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-general.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-description.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-excerpt.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-excerptmore.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-feed.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-ogp.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-script.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-social.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-thumbnail.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-widget.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.model.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.local-nav.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.manage-custom-post-type.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.bread-crumb.php' );
+
+		$Admin               = new MW_WP_Hacks_Admin();
+		$Setting_General     = new MW_WP_Hacks_Setting_General();
+		$Setting_Description = new MW_WP_Hacks_Setting_Description();
+		$Setting_Excerpt     = new MW_WP_Hacks_Setting_Excerpt();
+		$Setting_Excerptmore = new MW_WP_Hacks_Setting_Excerptmore();
+		$Setting_Feed        = new MW_WP_Hacks_Setting_Feed();
+		$Setting_Ogp         = new MW_WP_Hacks_Setting_Ogp();
+		$Setting_Script      = new MW_WP_Hacks_Setting_Script();
+		$Setting_Social      = new MW_WP_Hacks_Setting_Social();
+		$Setting_Thumbnail   = new MW_WP_Hacks_Setting_Thumbnail();
+		$Setting_Widget      = new MW_WP_Hacks_Setting_Widget();
+		$Model = new MW_WP_Hacks_Model( array(
+			'General'     => $Setting_General,
+			'Description' => $Setting_Description,
+			'Excerpt'     => $Setting_Excerpt,
+			'Excerptmore' => $Setting_Excerptmore,
+			'Feed'        => $Setting_Feed,
+			'Ogp'         => $Setting_Ogp,
+			'Script'      => $Setting_Script,
+			'Social'      => $Setting_Social,
+			'Thumbnail'   => $Setting_Thumbnail,
+			'Widget'      => $Setting_Widget,
+		) );
+
+		// general
+		$Settng_General_option = $Setting_General->get_option();
+		if ( $Settng_General_option['wp_generator'] === 'true' ) {
+			remove_action( 'wp_head', 'wp_generator' );
+		}
+		if ( $Settng_General_option['page_excerpt'] === 'true' ) {
+			add_post_type_support( 'page', 'excerpt' );
+		}
+		if ( $Settng_General_option['display_only_self_uploaded'] === 'true' ) {
+			add_action( 'pre_get_posts', array( $Model, 'display_only_self_uploaded_medias' ) );
+			add_action( 'wp_ajax_query-attachments', array( $Model, 'define_doing_query_attachment_const' ), 0 );
+		}
+		if ( $Settng_General_option['fix_is_author'] === 'true' ) {
+			add_action( 'pre_get_posts', array( $Model, 'fix_is_author_and_is_archive_post_type' ) );
+		}
+		if ( $Settng_General_option['fix_caption_width'] === 'true' ) {
+			add_filter( 'img_caption_shortcode', array( $Model, 'set_img_caption' ), 10, 3 );
+		}
+		if ( $Settng_General_option['checked_ontop'] === 'true' ) {
+			add_action( 'wp_terms_checklist_args', array( $Model, 'wp_category_terms_checklist_no_top' ) );
+		}
+		if ( $Settng_General_option['remove_updated_link'] === 'true' ) {
+			add_action( 'admin_head', array( $Model, 'cpt_public_false' ) );
+		}
+		if ( $Settng_General_option['thumbnail_info'] === 'true' ) {
+			add_filter( 'admin_post_thumbnail_html', array( $Model, 'admin_post_thumbnail_html' ) );
+		}
+		if ( $Settng_General_option['fix_ja_title'] === 'true' && get_locale() === 'ja' ) {
+			add_filter( 'wp_title', array( $Model, 'wp_title' ), 10, 3 );
+		}
+
+		// description
+		$Settng_Description_option = $Setting_Description->get_option();
+		if ( $Settng_Description_option['view'] === 'true' ) {
+			add_action( 'wp_head', array( $Model, 'display_description' ) );
+		}
+
+		// excerpt
+		$Setting_Excerpt_option = $Setting_Excerpt->get_option();
+		if ( !empty( $Setting_Excerpt_option ) ) {
+			add_filter( 'wp_trim_excerpt', array( $Model, 'wp_trim_excerpt' ) );
+		}
+
+		// Excerptmore
+		$Setting_Excerptmore_option = $Setting_Excerptmore->get_option();
+		if ( !empty( $Setting_Excerptmore_option ) ) {
+			add_filter( 'excerpt_more', array( $Model, 'excerpt_more' ) );
+		}
+
+		// feed
+		$Setting_Feed_option = $Setting_Feed->get_option();
+		if ( in_array( 'true', $Setting_Feed_option ) ) {
+			add_filter( 'pre_get_posts', array( $Model, 'set_rss_post_types' ) );
+		}
+
+		// ogp
+		$Setting_Ogp_option = $Setting_Ogp->get_option();
+		if ( $Setting_Ogp_option['use_ogp'] === 'true' ) {
+			add_action( 'wp_head', array( $Model, 'display_ogp_tags' ) );
+		}
+		if ( $Setting_Ogp_option['update_cache'] === 'true' ) {
+			add_action( 'transition_post_status', array( $Model, 'update_facebook_cache' ), 10, 3 );
+		}
+
+		// script
+		add_filter( 'wp_footer', array( $Model, 'social_button_footer' ) );
+
+		// social
+		add_action( 'wp_head', array( $Model, 'add_profile_for_google_plus' ) );
+		add_action( 'wp_head', array( $Model, 'add_google_site_verification' ) );
+
+		// thumbnail
+		$Setting_Thumbnail_option = $Setting_Thumbnail->get_option();
+		//if ( count( $Setting_Thumbnail_option ) > 1 ) {
+			add_action( 'init', array( $Model, 'set_thumbnail' ) );
+		//}
+
+		// widget
+		$Setting_Widget_option = $Setting_Widget->get_option();
+		if ( count( $Setting_Widget_option ) > 1 ) {
+			add_action( 'widgets_init', array( $Model, 'widgets_init' ) );
 		}
 	}
 
@@ -78,222 +173,37 @@ class mw_wp_hacks {
 	 * アンインストールした時の処理
 	 */
 	public static function uninstall() {
-		$fields = self::load_fields_classes();
-		foreach ( $fields as $field ) {
-			$field->uninstall();
-		}
+		delete_option( 'mw-wp-hacks' );
+		delete_option( 'mw-wp-hacks-general' );
+		delete_option( 'mw-wp-hacks-description' );
+		delete_option( 'mw-wp-hacks-excerpt' );
+		delete_option( 'mw-wp-hacks-excerptmore' );
+		delete_option( 'mw-wp-hacks-feed' );
+		delete_option( 'mw-wp-hacks-ogp' );
+		delete_option( 'mw-wp-hacks-script' );
+		delete_option( 'mw-wp-hacks-social' );
+		delete_option( 'mw-wp-hacks-thumbnail' );
+		delete_option( 'mw-wp-hacks-widget' );
 	}
 
 	/**
-	 * init
+	 * get_description
+	 * deprecated
+	 * @param int 文字数
+	 * @return string description
 	 */
-	public function init() {
-		load_plugin_textdomain( MWHACKS_Config::DOMAIN, false, basename( dirname( __FILE__ ) ) . '/languages' );
-
-		remove_action( 'wp_head', 'wp_generator' );
-		add_post_type_support( 'page', 'excerpt' );
-		//add_editor_style();
-
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-
-		add_action( 'pre_get_posts', array( $this, 'display_only_self_uploaded_medias' ) );
-		add_action( 'pre_get_posts', array( $this, 'fix_is_author_and_is_archive_post_type' ) );
-		add_action( 'wp_ajax_query-attachments', array( $this, 'define_doing_query_attachment_const' ), 0 );
-		add_filter( 'img_caption_shortcode', array( $this, 'set_img_caption' ), 10, 3 );
-		add_action( 'wp_terms_checklist_args', array( $this, 'wp_category_terms_checklist_no_top' ) );
-		add_action( 'admin_head', array( $this, 'cpt_public_false' ) );
-		add_filter( 'admin_post_thumbnail_html', array( $this, 'admin_post_thumbnail_html' ) );
-
-		if ( defined( 'WPLANG' ) && WPLANG === 'ja' ) {
-			add_filter( 'wp_title', array( $this, 'wp_title' ), 10, 3 );
-		}
+	public static function get_description( $strnum = 200 ) {
+		echo 'This is a deprecated function MW_WP_Hacks::get_description().'.
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.model.php' );
+		$Model = new MW_WP_Hacks_Model();
+		return $Model->get_description( $strnum );
 	}
-
-	public function admin_menu() {
-		include_once( plugin_dir_path( __FILE__ ) . 'system/mw_wp_hacks_admin_page.php' );
-		new mw_wp_hacks_admin_page();
-	}
-
-	/****************************************************************************/
-
-	/**
-	 * set_content_width
-	 */
-	public function set_content_width() {
-		global $content_width;
-		$width = apply_filters( MWHACKS_Config::NAME . '-content_width', get_option( 'large_size_w' ) );
-		$content_width = $width;
-	}
-
-	/**
-	 * wp_title
-	 * ページタイトルを出力
-	 */
-	public function wp_title( $title, $sep, $seplocation ) {
-		global $page, $paged;
-		if ( is_date() ) {
-			$title = '';
-			if ( $y = intval( get_query_var( 'year' ) ) )
-				$title .= sprintf( '%4d年', $y );
-			if ( $m = intval( get_query_var( 'monthnum' ) ) )
-				$title .= sprintf( '%2d月', $m );
-			if ( $d = intval( get_query_var( 'day' ) ) ) {
-				$title .= sprintf( '%2d日', $d );
-			}
-			if ( $seplocation == 'right' ) {
-				$title .= ' ' . $sep . ' ';
-			} else {
-				$title = ' ' . $sep . ' ' . $title;
-			}
-		}
-		elseif ( is_search() ) {
-			if ( $seplocation == 'right' ) {
-				$pattern = '/(.*?) ' . preg_quote( $sep ) . ' (検索結果\:)  (' . preg_quote( $sep ) . ' )$/';
-				$title = preg_replace( $pattern, '$2$1 $3', $title );
-			} else {
-				$pattern = '/^( ' . preg_quote( $sep ) . ' )(検索結果\:)  ' . preg_quote( $sep ) . '  (.*?)$/';
-				$title = preg_replace( $pattern, '$1$2 $3', $title );
-			}
-		}
-		elseif ( is_tax() ) {
-			$term_obj = get_queried_object();
-			$title = $term_obj->name;
-			if ( $seplocation == 'right' ) {
-				$title .= ' ' . $sep . ' ';
-			} else {
-				$title = ' ' . $sep . ' ' . $title;
-			}
-		}
-		elseif ( $paged >= 2 || $page >= 2 ) {
-			if ( $seplocation == 'right' ) {
-				$title .= 'ページ' . max( $paged, $page );
-			} else {
-				$title = 'ページ' . max( $paged, $page ) . $title;
-			}
-			if ( $seplocation == 'right' ) {
-				$title .= ' ' . $sep . ' ';
-			} else {
-				$title = ' ' . $sep . ' ' . $title;
-			}
-		}
-		if ( !$sep )
-			$title = trim( $title );
-		return $title;
-	}
-
-	/**
-	 * display_only_self_uploaded_medias
-	 */
-	public function display_only_self_uploaded_medias( $wp_query ) {
-		global $userdata;
-		if ( is_admin() && ( $wp_query->is_main_query() || ( defined( 'DOING_QUERY_ATTACHMENT' ) && DOING_QUERY_ATTACHMENT ) ) && $wp_query->get( 'post_type' ) == 'attachment' && !current_user_can( 'manage_options' ) ) {
-			$user = wp_get_current_user();
-			$wp_query->set( 'author', $user->ID );
-		}
-	}
-
-	/**
-	 * fix_is_author_and_is_archive_post_type
-	 */
-	public function fix_is_author_and_is_archive_post_type( $wp_query ) {
-		if ( is_admin() || !$wp_query->is_main_query() )
-			return;
-		if ( $wp_query->is_author && $wp_query->is_post_type_archive ) {
-			$wp_query->is_author = false;
-		}
-	}
-
-	/**
-	 * define_doing_query_attachment_const
-	 */
-	public function define_doing_query_attachment_const() {
-		if ( ! defined( 'DOING_QUERY_ATTACHMENT' ) ) {
-			define( 'DOING_QUERY_ATTACHMENT', true );
-		}
-	}
-
-	/**
-	 * set_img_caption
-	 * デフォルトでdiv.wp-captionのwidthが+10pxされるのを無くす
-	 */
-	public function set_img_caption( $output, $attr, $content ) {
-		extract( shortcode_atts( array(
-			'id'		=> '',
-			'align'		=> 'alignnone',
-			'width'		=> '',
-			'caption'	=> ''
-		), $attr) );
-		if ( 1 > (int) $width || empty( $caption ) )
-			return $content;
-		if ( $id ) $id = 'id="' . esc_attr( $id ) . '" ';
-		return '<div ' . $id . 'class="wp-caption ' . esc_attr( $align )
-			. '" style="width: ' . (int) $width . 'px">'
-			. do_shortcode( $content )
-			. '<p class="wp-caption-text">' . $caption . '</p>'
-			. '</div>';
-	}
-
-	/**
-	 * wp_category_terms_checklist_no_top
-	 * カテゴリーの並び順を調整
-	 */
-	public function wp_category_terms_checklist_no_top( $args, $post_id = null ) {
-		$args['checked_ontop'] = false;
-		return $args;
-	}
-
-	/**
-	 * cpt_public_false
-	 * public => false なカスタム投稿タイプの場合は更新しましたのリンクを消す
-	 */
-	public function cpt_public_false() {
-		// カスタム投稿タイプのときだけ実行
-		$cpts = get_post_types( array(
-			'_builtin' => false,
-		) );
-		$pt = get_post_type();
-		if ( ! in_array( $pt, $cpts ) )
-			return;
-		// カスタム投稿タイプオブジェクトを取得
-		$pto = get_post_type_object( get_post_type() );
-		// public => false のとき
-		if ( isset( $pto->public ) && $pto->public == false ) {
-			?>
-			<style type="text/css">
-			.post-php #message a {
-				display: none;
-			}
-			.wp-list-table .post-title span.more-link {
-				display: none;
-			}
-			</style>
-			<?php
-		}
-	}
-
-	/**
-	 * admin_post_thumbnail_html
-	 * アイキャッチ画像の設定部分に説明を追加
-	 */
-	public function admin_post_thumbnail_html( $content ) {
-		global $_wp_additional_image_sizes;
-		if ( isset( $_wp_additional_image_sizes['post-thumbnail'] ) ) {
-			$postThumbnail = $_wp_additional_image_sizes['post-thumbnail'];
-			if ( isset( $postThumbnail['height'], $postThumbnail['width'] ) ) {
-				$height = $postThumbnail['height'];
-				$width  = $postThumbnail['width'];
-				$content .= '<p class="howto">推奨サイズ：' . $width . ' x ' . $height . '<br />※これより大きいサイズの画像を指定した場合は自動的にリサイズ&amp;トリミングされます。</p>';
-			}
-		}
-		return $content;
-	}
-
-	/****************************************************************************/
 
 	/**
 	 * is_custom_post_type
 	 * 引数無いときはカスタム投稿タイプかどうか、あるときはそのカスタム投稿タイプかどうか
-	 * @param    String    カスタム投稿タイプ
+	 * @param string $pt カスタム投稿タイプ名
+	 * @return bool
 	 */
 	public static function is_custom_post_type( $pt = '' ) {
 		$default_post_type = get_post_types( array(
@@ -319,7 +229,8 @@ class mw_wp_hacks {
 	/**
 	 * get_top_parent_id
 	 * 一番上位の親ページのIDを取得。自分が一番上だったら自分のIDを返す
-	 * @return    Int    ページID
+	 * @param object $post
+	 * @return int post_id
 	 */
 	public static function get_top_parent_id( $post ) {
 		if ( empty( $post->ID ) )
@@ -335,7 +246,6 @@ class mw_wp_hacks {
 
 	/**
 	 * pager
-	 * @return    String    html
 	 */
 	public static function pager() {
 		global $wp_rewrite;
@@ -371,127 +281,23 @@ class mw_wp_hacks {
 	}
 
 	/**
-	 * localNavを表示
+	 * the_localNav
+	 * localNav を表示
+	 * @param array $args
 	 */
-	public static function the_localNav( Array $args = array() ) {
-		global $post;
-		$defaults = array(
-			'title' => true,		// 親ページタイトル表示
-			'hide_empty' => true,	// 子がいないときは表示しない
-		);
-		$args = array_merge( $defaults, $args );
-		if ( is_front_page() ) return;
-
-		$postTypeObject = get_post_type_object( get_post_type() );
-
-		$localNavs = array();
-
-		// 固定ページのとき
-		if ( is_page() ) {
-			$parentId = self::get_top_parent_id( $post );
-			$children = wp_list_pages( array(
-				'title_li' => '',
-				'sort_column' => 'menu_order',
-				'child_of' => $parentId,
-				'echo' => false
-			) );
-			$title = get_the_title( $parentId );
-			$titleLink = get_permalink( $parentId );
-
-			$localNavs[] = array(
-				'children' => $children,
-				'title' => $title,
-				'titleLink' => $titleLink,
-			);
-
-		// ブログもしくはカスタム投稿タイプのとき
-		} elseif ( is_blog() || self::is_custom_post_type() ) {
-
-			// カスタム投稿タイプ（固定ページ）のとき
-			if ( self::is_custom_post_type() && !empty( $postTypeObject->hierarchical ) ) {
-				$children = wp_list_pages( array(
-					'title_li' => '',
-					'sort_column' => 'menu_order',
-					'post_type' => get_post_type(),
-					'echo' => false
-				) );
-				$title = $postTypeObject->labels->name;
-
-				$localNavs[] = array(
-					'children' => $children,
-					'title' => $title,
-				);
-			}
-
-			if ( !empty( $postTypeObject->taxonomies ) ) {
-				foreach ( $postTypeObject->taxonomies as $taxonomy_name ) {
-					$children = wp_list_categories( array(
-						'title_li' => '',
-						'show_count' => false,
-						'hide_empty' => true,
-						'echo' => false,
-						'taxonomy' => $taxonomy_name,
-					) );
-					$taxonomy = get_taxonomy( $taxonomy_name );
-					if ( isset( $taxonomy->label ) )
-						$title = $taxonomy->label;
-
-					$localNavs[] = array(
-						'children' => $children,
-						'title' => $title,
-					);
-				}
-			}
-		}
-		if ( $args['hide_empty'] && empty( $children ) ) return;
-		?>
-		<?php foreach ( $localNavs as $localNav ) : ?>
-		<div class="localnav">
-			<dl>
-				<?php if ( !empty( $args['title'] ) ) : ?>
-				<dt class="localnav-parent-title">
-					<?php if ( empty( $localNav['titleLink'] ) ) : ?>
-					<?php echo esc_html( $localNav['title'] ); ?>
-					<?php else : ?>
-					<a href="<?php echo esc_url( $localNav['titleLink'] ); ?>"><?php echo esc_html( $localNav['title'] ); ?></a>
-					<?php endif; ?>
-				</dt>
-				<?php endif; ?>
-				<dd class="localnav-sub-pages">
-					<ul>
-						<?php echo $localNav['children']; ?>
-					</ul>
-				</dd>
-			</dl>
-		<!-- end .localNav --></div>
-		<?php endforeach; ?>
-		<?php
+	public static function the_localNav( array $args = array() ) {
+		$Local_Nav = new MW_WP_Hacks_Local_Nav( $args );
+		$Local_Nav->display();
 	}
 
 	/**
-	 * descriptionを取得
-	 * @param	Int 文字数
-	 * @return	String description
+	 * the_bread_crumb
+	 * パンくずリストを表示
+	 * @param array $args
 	 */
-	public static function get_description( $strnum = 200 ) {
-		global $post;
-		$description = get_bloginfo( 'description' );
-		$site_description = $description;
-		if ( is_singular() && empty( $post->post_password ) ) {
-			if ( !empty( $post->post_excerpt ) ) {
-				$description = $post->post_excerpt;
-			} elseif ( !empty( $post->post_content ) ) {
-				$description = $post->post_content;
-			}
-		}
-		$description = strip_shortcodes( $description );
-		$description = str_replace( ']]>', ']]&gt;', $description );
-		$description = strip_tags( $description );
-		$description = str_replace( array( "\r\n","\r","\n" ), '', $description );
-		$description = mb_strimwidth( $description, 0, $strnum, "...", 'utf8' );
-		if ( empty( $description ) ) {
-			$description = $site_description;
-		}
-		return apply_filters( MWHACKS_Config::NAME . '-description', $description );
+	public static function the_bread_crumb( array $args = array() ) {
+		$Bread_Crumb = new MW_WP_Hacks_Bread_Crumb();
+		$Bread_Crumb->display( $args );
 	}
 }
+$MW_WP_Hacks = new MW_WP_Hacks();
