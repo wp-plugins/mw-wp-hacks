@@ -3,8 +3,8 @@ Contributors: inc2734
 Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
-Tested up to: 3.9.1
-Stable tag: 0.6.1
+Tested up to: 4.0.1
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,12 +28,24 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Define widget areas.
 * Define custom thumbnail sizes.
 * Fix wp_title in the case of japanese.
-* Set $content_width same as large_size_w.
-* Add useful method: mw_wp_hacks::pager();
-* Add useful method: mw_wp_hacks::get_top_parent_id();
-* Add useful method: mw_wp_hacks::is_custom_post_type();
-* Add useful method: mw_wp_hacks::the_localNav();
-etc...
+* Useful method: MW_WP_Hacks::pager();
+* Useful method: MW_WP_Hacks::get_top_parent_id();
+* Useful method: MW_WP_Hacks::is_custom_post_type();
+* Useful method: MW_WP_Hacks::the_localNav();
+* Useful method: MW_WP_Hacks::the_bread_crumb();
+* The Class that Register Custom Post Type and Custom taxonomy.  
+  ‘‘‘
+  $Manage_Custom_Post_Type = new MW_WP_Hacks_Manage_Custom_Post_Type();
+  $Manage_Custom_Post_Type->custom_post_type( '新着情報', 'news',
+      array( 'title', 'editor', 'author', 'excerpt', 'comments', 'revisions', 'thumbnail' ),
+      array( 'has_archive' => false )
+  );
+  $Manage_Custom_Post_Type->custom_taxonomy( '新着カテゴリー', 'news-category', array( 'news' ),
+    array( 'hierarchical' => true )
+  );
+  $Manage_Custom_Post_Type->init();
+  ‘‘‘
+* etc...
 
 == Installation ==
 
@@ -42,6 +54,23 @@ etc...
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 1.0.4 =
+* Fixed a custom rss settings bug.
+
+= 1.0.3 =
+* Fixed a custom rss settings bug.
+
+= 1.0.2 =
+* Fixed a bug that is incorrect ogp image size.
+
+= 1.0.1 =
+* Fixed the Universal Analytics bug.
+
+= 1.0.0 =
+* Refactoring.
+* Add Method: MW_WP_Hacks::the_bread_crumb()
+* Add Class: MW_WP_Hacks_Manage_Custom_Post_Type
 
 = 0.6.1 =
 * Bugfix: Fix bug that display notice error in feed.

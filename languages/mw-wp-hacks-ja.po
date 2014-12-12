@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 0.4.1\n"
+"Project-Id-Version: MW WP Hacks 1.0.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2014-01-10 06:10:51+00:00\n"
-"PO-Revision-Date: 2014-01-16 17:12+0900\n"
+"POT-Creation-Date: 2014-11-18 05:07:28+00:00\n"
+"PO-Revision-Date: 2014-12-10 17:51+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -15,105 +15,225 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.5.6\n"
-"X-Poedit-KeywordsList: __;_e\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html__;esc_html_x;_x\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: field/mwhacks_description.php:85
-msgid "Description"
-msgstr ""
+#: classes/class.bread-crumb.php:31
+msgid "Home"
+msgstr "ホーム"
 
-#: field/mwhacks_description.php:89
-msgid "Output meta description"
-msgstr "meta description を出力"
+#: classes/class.bread-crumb.php:42
+msgid "Page Not Found"
+msgstr "ページが見つかりません"
 
-#: field/mwhacks_description.php:93
-msgid "If this fields is empty, Tagline is used."
-msgstr "空欄の場合はキャッチコピーが使用されます。"
+#: classes/class.bread-crumb.php:45
+msgid "Search results for \"%s\""
+msgstr "「%s」の検索結果"
 
-#: field/mwhacks_description.php:97
-msgid "Basic"
-msgstr "基本"
+#: classes/class.manage-custom-post-type.php:69
+msgid "Add New %s"
+msgstr "新規%sを追加"
 
-#: field/mwhacks_excerpt.php:60
-msgid "Text After Excerpt ( HTML )"
-msgstr "抜粋の後に表示するテキスト（HTML）"
+#: classes/class.manage-custom-post-type.php:70
+#: classes/class.manage-custom-post-type.php:71
+msgid "Add New"
+msgstr "新規追加"
 
-#: field/mwhacks_excerpt.php:65
-msgid "%link% is converted to &lt;?php echo get_permalink(); ?&gt;"
-msgstr "%link% は &lt;?php echo get_permalink(); ?&gt; に変換されます。"
+#: classes/class.manage-custom-post-type.php:72
+msgid "Edit %s"
+msgstr "%sを編集"
 
-#: field/mwhacks_excerptmore.php:61
-msgid "Text After Excerpt when an Excerpt was Cut ( HTML )"
-msgstr "抜粋が切れたときに抜粋の後に表示するテキスト（HTML）"
+#: classes/class.manage-custom-post-type.php:73
+msgid "View %s"
+msgstr "%sを表示"
 
-#: field/mwhacks_feed.php:65
-msgid "Included Post Types in Main Feed"
-msgstr "メインフィードに表示する投稿タイプ"
+#: classes/class.manage-custom-post-type.php:74
+msgid "No %s found."
+msgstr "%sは見つかりませんでした。"
 
-#: field/mwhacks_ogp.php:83
-msgid "OGP"
-msgstr ""
+#: classes/class.manage-custom-post-type.php:75
+msgid "No %s found in trash."
+msgstr "ゴミ箱内に%sは見つかりませんでした。"
 
-#: field/mwhacks_ogp.php:355
-msgid "OGP Image"
-msgstr "OGP画像"
+#: classes/class.manage-custom-post-type.php:76
+msgid "Search %s"
+msgstr "%sを検索"
 
-#: field/mwhacks_ogp.php:384 field/mwhacks_ogp.php:425
-msgid "Set OGP Image"
-msgstr "OGP画像を設定"
+#: classes/class.manage-custom-post-type.php:188
+msgctxt "dashboard-glance-items"
+msgid "%s %s"
+msgstr "%s件の%s"
 
-#: field/mwhacks_ogp.php:394
-msgid "Delete OGP Image"
-msgstr "OGP画像を削除"
-
-#: field/mwhacks_ogp.php:398
-msgid "Recommended image size of 1200 x 627"
-msgstr "推奨画像サイズ 1200 &times; 627"
-
-#: field/mwhacks_script.php:61
-msgid "Include Social Script"
-msgstr "読み込むソーシャルJavaScript"
-
-#: field/mwhacks_social.php:113
-msgid "Social Account"
-msgstr "ソーシャルアカウント"
-
-#: field/mwhacks_thumbnail.php:87
-msgid "Custom Thumbnail Sizes"
-msgstr "カスタムサムネイルサイズ"
-
-#: field/mwhacks_thumbnail.php:121
-msgid ""
-"When you want to use a thumbnail, firstly add \"Thumbnail Size Name\" is a "
-"thumbnail size of \"post-thumbnail\"."
-msgstr ""
-"アイキャッチ画像を使用したいときは、まず「Thumbnail Size Name」が「post-"
-"thumbnail」のサムネイルサイズを登録してください。"
-
-#: field/mwhacks_widget.php:97
-msgid "Widget Areas"
-msgstr "ウィジェットエリア"
-
-#: field/mwhacks_widget.php:123
-msgid "%1$s is converted to ID, %2$s is converted to Class."
-msgstr "%1$s は id に変換されます。%2$s は class に変換されます。"
-
-#: system/mw_wp_hacks_admin_page.php:78
+#: classes/class.mw-wp-hacks-admin.php:69
 msgid "Updated."
 msgstr "更新しました。"
 
-#: system/mw_wp_hacks_admin_page.php:93
+#: classes/class.mw-wp-hacks-admin.php:82
 msgid "Save Changes"
 msgstr "保存する"
 
+#: classes/class.setting-description.php:52
+msgid "Description"
+msgstr "ディスクリプション"
+
+#: classes/class.setting-description.php:56
+msgid "Output meta description"
+msgstr "meta description を出力"
+
+#: classes/class.setting-description.php:60
+msgid "If this fields is empty, Tagline is used."
+msgstr "空欄の場合はキャッチコピーが使用されます。"
+
+#: classes/class.setting-description.php:64
+msgid "Basic"
+msgstr "基本"
+
+#: classes/class.setting-excerpt.php:36
+msgid "Text After Excerpt ( HTML )"
+msgstr "抜粋の後に表示するテキスト（HTML）"
+
+#: classes/class.setting-excerpt.php:41
+msgid "%link% is converted to &lt;?php echo get_permalink(); ?&gt;"
+msgstr "%link% は &lt;?php echo get_permalink(); ?&gt; に変換されます。"
+
+#: classes/class.setting-excerptmore.php:36
+msgid "Text After Excerpt when an Excerpt was Cut ( HTML )"
+msgstr "抜粋が切れたときに抜粋の後に表示するテキスト（HTML）"
+
+#: classes/class.setting-feed.php:39
+msgid "Included Post Types in Main Feed"
+msgstr "メインフィードに表示する投稿タイプ"
+
+#: classes/class.setting-general.php:46
+msgid "General"
+msgstr "一般"
+
+#: classes/class.setting-general.php:50
+msgid "Remove WordPress Version in head."
+msgstr "head から WordPress のバージョン情報を削除"
+
+#: classes/class.setting-general.php:54
+msgid "Add support for excerpts in Pages."
+msgstr "固定ページに抜粋を追加"
+
+#: classes/class.setting-general.php:58
+msgid "Display only the files that the author have uploaded in media library."
+msgstr "その著者がメディアライブラリにアップロードしたファイルのみ表示"
+
+#: classes/class.setting-general.php:62
+msgid ""
+"The is_author flag to \"false\" when the is_archive_post_type flag is \"true"
+"\"."
+msgstr "is_archive_post_type が \"true\" のとき、is_author を \"false\" に"
+
+#: classes/class.setting-general.php:66
+msgid "Stop that width of .wp-caption is added 10px."
+msgstr ".wp-caption の幅が 10px 追加されるのを止める"
+
+#: classes/class.setting-general.php:70
+msgid "Stop checked categories moving to top"
+msgstr "チェックしたカテゴリーが上に移動するのを止める"
+
+#: classes/class.setting-general.php:74
+msgid "Remove updated link in edit page when public flag is false."
+msgstr ""
+"public が false のとき、投稿ページで表示される「更新しました」のリンクを削除"
+
+#: classes/class.setting-general.php:78
+msgid "Add thumbnail information in thumbnail meta box."
+msgstr "アイキャッチ画像メタボックスにアイキャッチ画像の情報を追加"
+
+#: classes/class.setting-general.php:83
+msgid "Fixed the bug of the \"the_title\"."
+msgstr "「the_title」の不具合を修正"
+
+#: classes/class.setting-ogp.php:112
+msgid "OGP"
+msgstr "OGP"
+
+#: classes/class.setting-ogp.php:117
+msgid "To update cache in facebook when publish or update."
+msgstr "公開または更新したときに Facebook のキャッシュを更新する"
+
+#: classes/class.setting-ogp.php:121
+msgid "To generate OGP tags and use OGP settings."
+msgstr "OGP タグを生成、OGP 設定を使用する"
+
+#: classes/class.setting-ogp.php:198
+msgid "OGP Image"
+msgstr "OGP画像"
+
+#: classes/class.setting-ogp.php:227 classes/class.setting-ogp.php:263
+msgid "Set OGP Image"
+msgstr "OGP画像を設定"
+
+#: classes/class.setting-ogp.php:237
+msgid "Delete OGP Image"
+msgstr "OGP画像を削除"
+
+#: classes/class.setting-ogp.php:241
+msgid "Recommended image size of 1200 x 630"
+msgstr "推奨画像サイズ 1200 &times; 630"
+
+#: classes/class.setting-script.php:199
+msgid "Include Social Script"
+msgstr "読み込むソーシャルJavaScript"
+
+#: classes/class.setting-social.php:51
+msgid "Social Account"
+msgstr "ソーシャルアカウント"
+
+#: classes/class.setting-social.php:60
+msgid ""
+"IF you use setting about \"include facebook script\" or \"OGP\", you shoud "
+"input this field."
+msgstr ""
+"「Facebook のスクリプトを読み込む」または OGP の設定を使用している場合、この"
+"フィールドは入力すべきです"
+
+#: classes/class.setting-social.php:69
+msgid "IF you input this, to generate GA tracking script."
+msgstr "入力した場合、GA トラッキングスクリプトを生成"
+
+#: classes/class.setting-social.php:78
+msgid "IF you input this, to generate UA tracking script."
+msgstr "入力した場合、UA トラッキングスクリプトを生成"
+
+#: classes/class.setting-social.php:87
+msgid "IF you input this, to generate publisher tag of Google+ profile page."
+msgstr "入力した場合、Google+ プロフィールページの publisher タグを生成"
+
+#: classes/class.setting-social.php:96
+msgid "IF you input this, to generate meta tag for Google Site Verification."
+msgstr "入力した場合、Google Site Verification 用のメタタグを生成"
+
+#: classes/class.setting-thumbnail.php:51
+msgid "Custom Thumbnail Sizes"
+msgstr "カスタムサムネイルサイズ"
+
+#: classes/class.setting-thumbnail.php:82
+msgid ""
+"When you want to use thumbnails and you dont' t define \"post-thumbnail\", "
+"firstly add \"post-thumbnail\"."
+msgstr ""
+"アイキャッチ画像を使用したい、かつ「post-thumbnail」を定義していない場合は、"
+"まず「post-thumbnail」のサムネイルサイズを登録してください。"
+
+#: classes/class.setting-widget.php:46
+msgid "Widget Areas"
+msgstr "ウィジェットエリア"
+
+#: classes/class.setting-widget.php:72
+msgid "%1$s is converted to ID, %2$s is converted to Class."
+msgstr "%1$s は id に変換されます。%2$s は class に変換されます。"
+
 #. Plugin Name of the plugin/theme
 msgid "MW WP Hacks"
-msgstr ""
+msgstr "MW WP Hacks"
 
 #. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "http://2inc.org"
+msgid "https://github.com/inc2734/mw-wp-hacks"
 msgstr ""
 
 #. Description of the plugin/theme
@@ -122,4 +242,8 @@ msgstr "MW WP HackはWordPressでの開発を手助けするプラグインで�
 
 #. Author of the plugin/theme
 msgid "Takashi Kitajima"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://2inc.org"
 msgstr ""
