@@ -2,7 +2,7 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.1.0
+ * Version    : 1.2.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
@@ -599,6 +599,33 @@ class MW_WP_Hacks_Model {
 			}
 			</style>
 			<?php
+		}
+	}
+
+	/**
+	 * redirect_taxonomy_archive
+	 */
+	public function redirect_taxonomy_archive() {
+		$option = $this->settings['Taxonomy_Archive_Disable']->get_option();
+		foreach ( $option as $taxonomy => $bool ) {
+			$taxonomy_object = get_taxonomy( $taxonomy );
+			$post_types = array();
+			if ( isset( $taxonomy_object->object_type ) ) {
+				$post_types = $taxonomy_object->object_type;
+			}
+			if ( is_tax( $taxonomy ) && $bool === 'true' ) {
+				// 関連する投稿タイプが一つで、かつアーカイブページがあればそこにリダイレクト
+				// なければホームにリダイレクト
+				if ( is_array( $post_types ) && isset( $post_types[0] ) && count( $post_types ) === 1 ) {
+					$post_type_archive_link = get_post_type_archive_link( $post_types[0] );
+					if ( $post_type_archive_link ) {
+						wp_redirect( $post_type_archive_link );
+						exit;
+					}
+				}
+				wp_redirect( home_url() );
+				exit;
+			}
 		}
 	}
 }

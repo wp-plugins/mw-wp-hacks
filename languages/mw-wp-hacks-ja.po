@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MW WP Hacks 1.1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2014-12-22 06:33:50+00:00\n"
-"PO-Revision-Date: 2014-12-22 15:37+0900\n"
+"POT-Creation-Date: 2014-12-22 09:31:19+00:00\n"
+"PO-Revision-Date: 2014-12-22 18:32+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -77,8 +77,8 @@ msgstr "更新しました。"
 msgid "Save Changes"
 msgstr "保存する"
 
-#: classes/class.setting-cpt-archive-only.php:40
-msgid "Custom post type to disable a single page."
+#: classes/class.setting-cpt-archive-only.php:41
+msgid "Custom post type to disable a single page"
 msgstr "シングルページを無効にするカスタム投稿タイプ"
 
 #: classes/class.setting-description.php:52
@@ -215,6 +215,10 @@ msgstr "入力した場合、Google+ プロフィールページの publisher �
 #: classes/class.setting-social.php:96
 msgid "IF you input this, to generate meta tag for Google Site Verification."
 msgstr "入力した場合、Google Site Verification 用のメタタグを生成"
+
+#: classes/class.setting-taxonomy-archive-disable.php:41
+msgid "Taxonomy archive to be disabled"
+msgstr "無効にするカスタムタクソノミー"
 
 #: classes/class.setting-thumbnail.php:51
 msgid "Custom Thumbnail Sizes"

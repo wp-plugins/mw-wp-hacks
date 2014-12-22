@@ -3,7 +3,7 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
@@ -53,6 +53,7 @@ class MW_WP_Hacks {
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-thumbnail.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-widget.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-cpt-archive-only.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-taxonomy-archive-disable.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.model.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.local-nav.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.manage-custom-post-type.php' );
@@ -65,30 +66,32 @@ class MW_WP_Hacks {
 	 * init
 	 */
 	public function init() {
-		$Admin                    = new MW_WP_Hacks_Admin();
-		$Setting_General          = new MW_WP_Hacks_Setting_General();
-		$Setting_Description      = new MW_WP_Hacks_Setting_Description();
-		$Setting_Excerpt          = new MW_WP_Hacks_Setting_Excerpt();
-		$Setting_Excerptmore      = new MW_WP_Hacks_Setting_Excerptmore();
-		$Setting_Feed             = new MW_WP_Hacks_Setting_Feed();
-		$Setting_Ogp              = new MW_WP_Hacks_Setting_Ogp();
-		$Setting_Script           = new MW_WP_Hacks_Setting_Script();
-		$Setting_Social           = new MW_WP_Hacks_Setting_Social();
-		$Setting_Thumbnail        = new MW_WP_Hacks_Setting_Thumbnail();
-		$Setting_Widget           = new MW_WP_Hacks_Setting_Widget();
-		$Setting_CPT_Archive_Only = new MW_WP_Hacks_Setting_CPT_Archive_Only();
+		$Admin                            = new MW_WP_Hacks_Admin();
+		$Setting_General                  = new MW_WP_Hacks_Setting_General();
+		$Setting_Description              = new MW_WP_Hacks_Setting_Description();
+		$Setting_Excerpt                  = new MW_WP_Hacks_Setting_Excerpt();
+		$Setting_Excerptmore              = new MW_WP_Hacks_Setting_Excerptmore();
+		$Setting_Feed                     = new MW_WP_Hacks_Setting_Feed();
+		$Setting_Ogp                      = new MW_WP_Hacks_Setting_Ogp();
+		$Setting_Script                   = new MW_WP_Hacks_Setting_Script();
+		$Setting_Social                   = new MW_WP_Hacks_Setting_Social();
+		$Setting_Thumbnail                = new MW_WP_Hacks_Setting_Thumbnail();
+		$Setting_Widget                   = new MW_WP_Hacks_Setting_Widget();
+		$Setting_CPT_Archive_Only         = new MW_WP_Hacks_Setting_CPT_Archive_Only();
+		$Setting_Taxonomy_Archive_Disable = new MW_WP_Hacks_Setting_Taxonomy_Archive_Disable();
 		$Model = new MW_WP_Hacks_Model( array(
-			'General'          => $Setting_General,
-			'Description'      => $Setting_Description,
-			'Excerpt'          => $Setting_Excerpt,
-			'Excerptmore'      => $Setting_Excerptmore,
-			'Feed'             => $Setting_Feed,
-			'Ogp'              => $Setting_Ogp,
-			'Script'           => $Setting_Script,
-			'Social'           => $Setting_Social,
-			'Thumbnail'        => $Setting_Thumbnail,
-			'Widget'           => $Setting_Widget,
-			'CPT_Archive_Only' => $Setting_CPT_Archive_Only,
+			'General'                  => $Setting_General,
+			'Description'              => $Setting_Description,
+			'Excerpt'                  => $Setting_Excerpt,
+			'Excerptmore'              => $Setting_Excerptmore,
+			'Feed'                     => $Setting_Feed,
+			'Ogp'                      => $Setting_Ogp,
+			'Script'                   => $Setting_Script,
+			'Social'                   => $Setting_Social,
+			'Thumbnail'                => $Setting_Thumbnail,
+			'Widget'                   => $Setting_Widget,
+			'CPT_Archive_Only'         => $Setting_CPT_Archive_Only,
+			'Taxonomy_Archive_Disable' => $Setting_Taxonomy_Archive_Disable,
 		) );
 
 		// general
@@ -174,6 +177,9 @@ class MW_WP_Hacks {
 		// CPT archive only
 		add_action( 'template_redirect', array( $Model, 'redirect_archive_only_for_single' ) );
 		add_action( 'admin_head', array( $Model, 'disable_preview_button' ) );
+
+		// taxonomy archive disable
+		add_action( 'template_redirect', array( $Model, 'redirect_taxonomy_archive' ) );
 	}
 
 	/**
@@ -193,6 +199,7 @@ class MW_WP_Hacks {
 		delete_option( 'mw-wp-hacks-thumbnail' );
 		delete_option( 'mw-wp-hacks-widget' );
 		delete_option( 'mw-wp-hacks-cpt-archive-only' );
+		delete_option( 'mw-wp-hacks-taxonomy-archive-disable' );
 	}
 
 	/**
