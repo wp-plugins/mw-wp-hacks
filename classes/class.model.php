@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.0.3
+ * Version    : 1.2.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : December 12, 2014
+ * Modified   : December 22, 2014
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -568,6 +568,63 @@ class MW_WP_Hacks_Model {
 					}
 					register_sidebar( $widget_args );
 				}
+			}
+		}
+	}
+
+	/**
+	 * redirect_archive_only_for_single
+	 */
+	public function redirect_archive_only_for_single() {
+		$option = $this->settings['CPT_Archive_Only']->get_option();
+		foreach ( $option as $post_type => $bool ) {
+			if ( is_singular( $post_type ) && $bool === 'true' ) {
+				wp_redirect( get_post_type_archive_link( $post_type ) );
+				exit;
+			}
+		}
+	}
+
+	/**
+	 * disable_preview_button
+	 */
+	public function disable_preview_button() {
+		$option = $this->settings['CPT_Archive_Only']->get_option();
+		$post_type = get_post_type();
+		if ( isset( $option[$post_type] ) && $option[$post_type] === 'true' ) {
+			?>
+			<style type="text/css">
+			#preview-action .preview {
+				display: none;
+			}
+			</style>
+			<?php
+		}
+	}
+
+	/**
+	 * redirect_taxonomy_archive
+	 */
+	public function redirect_taxonomy_archive() {
+		$option = $this->settings['Taxonomy_Archive_Disable']->get_option();
+		foreach ( $option as $taxonomy => $bool ) {
+			$taxonomy_object = get_taxonomy( $taxonomy );
+			$post_types = array();
+			if ( isset( $taxonomy_object->object_type ) ) {
+				$post_types = $taxonomy_object->object_type;
+			}
+			if ( is_tax( $taxonomy ) && $bool === 'true' ) {
+				// 関連する投稿タイプが一つで、かつアーカイブページがあればそこにリダイレクト
+				// なければホームにリダイレクト
+				if ( is_array( $post_types ) && isset( $post_types[0] ) && count( $post_types ) === 1 ) {
+					$post_type_archive_link = get_post_type_archive_link( $post_types[0] );
+					if ( $post_type_archive_link ) {
+						wp_redirect( $post_type_archive_link );
+						exit;
+					}
+				}
+				wp_redirect( home_url() );
+				exit;
 			}
 		}
 	}

@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 1.0.0\n"
+"Project-Id-Version: MW WP Hacks 1.1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2014-11-18 05:07:28+00:00\n"
-"PO-Revision-Date: 2014-12-10 17:51+0900\n"
+"POT-Creation-Date: 2014-12-22 09:31:19+00:00\n"
+"PO-Revision-Date: 2014-12-22 18:32+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -19,15 +19,15 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html__;esc_html_x;_x\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: classes/class.bread-crumb.php:31
+#: classes/class.bread-crumb.php:34
 msgid "Home"
 msgstr "ホーム"
 
-#: classes/class.bread-crumb.php:42
+#: classes/class.bread-crumb.php:45
 msgid "Page Not Found"
 msgstr "ページが見つかりません"
 
-#: classes/class.bread-crumb.php:45
+#: classes/class.bread-crumb.php:48
 msgid "Search results for \"%s\""
 msgstr "「%s」の検索結果"
 
@@ -65,6 +65,10 @@ msgctxt "dashboard-glance-items"
 msgid "%s %s"
 msgstr "%s件の%s"
 
+#: classes/class.model.php:153
+msgid "Recommended image size of %d x %d"
+msgstr "推奨画像サイズ %d &times; %d"
+
 #: classes/class.mw-wp-hacks-admin.php:69
 msgid "Updated."
 msgstr "更新しました。"
@@ -72,6 +76,10 @@ msgstr "更新しました。"
 #: classes/class.mw-wp-hacks-admin.php:82
 msgid "Save Changes"
 msgstr "保存する"
+
+#: classes/class.setting-cpt-archive-only.php:41
+msgid "Custom post type to disable a single page"
+msgstr "シングルページを無効にするカスタム投稿タイプ"
 
 #: classes/class.setting-description.php:52
 msgid "Description"
@@ -207,6 +215,10 @@ msgstr "入力した場合、Google+ プロフィールページの publisher �
 #: classes/class.setting-social.php:96
 msgid "IF you input this, to generate meta tag for Google Site Verification."
 msgstr "入力した場合、Google Site Verification 用のメタタグを生成"
+
+#: classes/class.setting-taxonomy-archive-disable.php:41
+msgid "Taxonomy archive to be disabled"
+msgstr "無効にするカスタムタクソノミー"
 
 #: classes/class.setting-thumbnail.php:51
 msgid "Custom Thumbnail Sizes"

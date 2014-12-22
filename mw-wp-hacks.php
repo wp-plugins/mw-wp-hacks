@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 1.0.4
+ * Version: 1.2.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: December 12, 2014
+ * Modified: December 22, 2014
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -52,33 +52,46 @@ class MW_WP_Hacks {
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-social.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-thumbnail.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-widget.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-cpt-archive-only.php' );
+		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.setting-taxonomy-archive-disable.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.model.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.local-nav.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.manage-custom-post-type.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.bread-crumb.php' );
 
-		$Admin               = new MW_WP_Hacks_Admin();
-		$Setting_General     = new MW_WP_Hacks_Setting_General();
-		$Setting_Description = new MW_WP_Hacks_Setting_Description();
-		$Setting_Excerpt     = new MW_WP_Hacks_Setting_Excerpt();
-		$Setting_Excerptmore = new MW_WP_Hacks_Setting_Excerptmore();
-		$Setting_Feed        = new MW_WP_Hacks_Setting_Feed();
-		$Setting_Ogp         = new MW_WP_Hacks_Setting_Ogp();
-		$Setting_Script      = new MW_WP_Hacks_Setting_Script();
-		$Setting_Social      = new MW_WP_Hacks_Setting_Social();
-		$Setting_Thumbnail   = new MW_WP_Hacks_Setting_Thumbnail();
-		$Setting_Widget      = new MW_WP_Hacks_Setting_Widget();
+		add_action( 'init', array( $this, 'init' ), 11 );
+	}
+
+	/**
+	 * init
+	 */
+	public function init() {
+		$Admin                            = new MW_WP_Hacks_Admin();
+		$Setting_General                  = new MW_WP_Hacks_Setting_General();
+		$Setting_Description              = new MW_WP_Hacks_Setting_Description();
+		$Setting_Excerpt                  = new MW_WP_Hacks_Setting_Excerpt();
+		$Setting_Excerptmore              = new MW_WP_Hacks_Setting_Excerptmore();
+		$Setting_Feed                     = new MW_WP_Hacks_Setting_Feed();
+		$Setting_Ogp                      = new MW_WP_Hacks_Setting_Ogp();
+		$Setting_Script                   = new MW_WP_Hacks_Setting_Script();
+		$Setting_Social                   = new MW_WP_Hacks_Setting_Social();
+		$Setting_Thumbnail                = new MW_WP_Hacks_Setting_Thumbnail();
+		$Setting_Widget                   = new MW_WP_Hacks_Setting_Widget();
+		$Setting_CPT_Archive_Only         = new MW_WP_Hacks_Setting_CPT_Archive_Only();
+		$Setting_Taxonomy_Archive_Disable = new MW_WP_Hacks_Setting_Taxonomy_Archive_Disable();
 		$Model = new MW_WP_Hacks_Model( array(
-			'General'     => $Setting_General,
-			'Description' => $Setting_Description,
-			'Excerpt'     => $Setting_Excerpt,
-			'Excerptmore' => $Setting_Excerptmore,
-			'Feed'        => $Setting_Feed,
-			'Ogp'         => $Setting_Ogp,
-			'Script'      => $Setting_Script,
-			'Social'      => $Setting_Social,
-			'Thumbnail'   => $Setting_Thumbnail,
-			'Widget'      => $Setting_Widget,
+			'General'                  => $Setting_General,
+			'Description'              => $Setting_Description,
+			'Excerpt'                  => $Setting_Excerpt,
+			'Excerptmore'              => $Setting_Excerptmore,
+			'Feed'                     => $Setting_Feed,
+			'Ogp'                      => $Setting_Ogp,
+			'Script'                   => $Setting_Script,
+			'Social'                   => $Setting_Social,
+			'Thumbnail'                => $Setting_Thumbnail,
+			'Widget'                   => $Setting_Widget,
+			'CPT_Archive_Only'         => $Setting_CPT_Archive_Only,
+			'Taxonomy_Archive_Disable' => $Setting_Taxonomy_Archive_Disable,
 		) );
 
 		// general
@@ -153,16 +166,20 @@ class MW_WP_Hacks {
 		add_action( 'wp_head', array( $Model, 'add_google_site_verification' ) );
 
 		// thumbnail
-		$Setting_Thumbnail_option = $Setting_Thumbnail->get_option();
-		//if ( count( $Setting_Thumbnail_option ) > 1 ) {
-			add_action( 'init', array( $Model, 'set_thumbnail' ) );
-		//}
+		$Model->set_thumbnail();
 
 		// widget
 		$Setting_Widget_option = $Setting_Widget->get_option();
 		if ( count( $Setting_Widget_option ) > 1 ) {
 			add_action( 'widgets_init', array( $Model, 'widgets_init' ) );
 		}
+
+		// CPT archive only
+		add_action( 'template_redirect', array( $Model, 'redirect_archive_only_for_single' ) );
+		add_action( 'admin_head', array( $Model, 'disable_preview_button' ) );
+
+		// taxonomy archive disable
+		add_action( 'template_redirect', array( $Model, 'redirect_taxonomy_archive' ) );
 	}
 
 	/**
@@ -181,6 +198,8 @@ class MW_WP_Hacks {
 		delete_option( 'mw-wp-hacks-social' );
 		delete_option( 'mw-wp-hacks-thumbnail' );
 		delete_option( 'mw-wp-hacks-widget' );
+		delete_option( 'mw-wp-hacks-cpt-archive-only' );
+		delete_option( 'mw-wp-hacks-taxonomy-archive-disable' );
 	}
 
 	/**

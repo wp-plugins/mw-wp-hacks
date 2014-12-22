@@ -3,8 +3,8 @@ Contributors: inc2734
 Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
-Tested up to: 4.0.1
-Stable tag: 1.0.4
+Tested up to: 4.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,8 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Define widget areas.
 * Define custom thumbnail sizes.
 * Fix wp_title in the case of japanese.
+* You can setting that custom post type to disable a single page.
+* You can setting that taxonomy archive to be disabled.
 * Useful method: MW_WP_Hacks::pager();
 * Useful method: MW_WP_Hacks::get_top_parent_id();
 * Useful method: MW_WP_Hacks::is_custom_post_type();
@@ -54,6 +56,13 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 1.2.0 =
+* Add setting that taxonomy archive to be disabled.
+
+= 1.1.0 =
+* Add setting that custom post type to disable a single page.
+* Fixed a japanese translation bug.
 
 = 1.0.4 =
 * Fixed a custom rss settings bug.
