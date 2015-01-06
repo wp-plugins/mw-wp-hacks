@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.2.0
+ * Version    : 1.3.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : December 22, 2014
+ * Modified   : January 6, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -603,28 +603,17 @@ class MW_WP_Hacks_Model {
 	}
 
 	/**
-	 * redirect_taxonomy_archive
+	 * posts_per_page
 	 */
-	public function redirect_taxonomy_archive() {
-		$option = $this->settings['Taxonomy_Archive_Disable']->get_option();
-		foreach ( $option as $taxonomy => $bool ) {
-			$taxonomy_object = get_taxonomy( $taxonomy );
-			$post_types = array();
-			if ( isset( $taxonomy_object->object_type ) ) {
-				$post_types = $taxonomy_object->object_type;
-			}
-			if ( is_tax( $taxonomy ) && $bool === 'true' ) {
-				// 関連する投稿タイプが一つで、かつアーカイブページがあればそこにリダイレクト
-				// なければホームにリダイレクト
-				if ( is_array( $post_types ) && isset( $post_types[0] ) && count( $post_types ) === 1 ) {
-					$post_type_archive_link = get_post_type_archive_link( $post_types[0] );
-					if ( $post_type_archive_link ) {
-						wp_redirect( $post_type_archive_link );
-						exit;
-					}
-				}
-				wp_redirect( home_url() );
-				exit;
+	public function posts_per_page( $wp_query ) {
+		if ( is_admin() || !$wp_query->is_main_query() ) {
+			return;
+		}
+		$option = $this->settings['CPT_Archive_Posts']->get_option();
+		if ( isset( $wp_query->query['post_type'] ) ) {
+			$post_type = $wp_query->query['post_type'];
+			if ( isset( $option[$post_type] ) && $wp_query->is_archive() ) {
+				$wp_query->set( 'posts_per_page', $option[$post_type] );
 			}
 		}
 	}

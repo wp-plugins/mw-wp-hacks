@@ -1,22 +1,22 @@
 <?php
 /**
- * Name       : MW WP Hacks Setting CPT Archive Only
- * Description: カスタム投稿タイプの詳細ページを無効にする
- * Version    : 1.0.2
+ * Name       : MW WP Hacks Setting CPT Archive Posts
+ * Description: カスタム投稿タイプ及び関連するタクソノミーのアーカイブの表示件数を設定
+ * Version    : 1.0.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
- * Create     : December 22, 2014
- * Modified   : January 6, 2015
+ * Create     : January 6, 2015
+ * Modified   : 
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
-class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting {
+class MW_WP_Hacks_Setting_CPT_Archive_Posts extends MW_WP_Hacks_Abstract_Setting {
 
 	/**
 	 * set_key
 	 */
 	protected function set_key() {
-		$this->key = 'cpt-archive-only';
+		$this->key = 'cpt-archive-posts';
 	}
 
 	/**
@@ -32,18 +32,20 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 	public function settings_page() {
 		$option = $this->get_option();
 		$post_types = $this->get_post_types();
+		$default_posts_per_page = get_option( 'posts_per_page' );
 		if ( $post_types ) :
 		?>
 		<tr>
-			<th><?php _e( 'Custom post type to disable a single page', 'mw-wp-hacks' ); ?></th>
+			<th><?php _e( 'The maximum number of posts', 'mw-wp-hacks' ); ?></th>
 			<td>
 				<div id="<?php echo esc_attr( $this->get_name() ); ?>">
+					<?php foreach ( $post_types as $post_type => $label ) : ?>
+					<?php $posts_per_page = ( isset( $option[$post_type] ) ) ? $option[$post_type] : $default_posts_per_page; ?>
 					<p>
-						<?php foreach ( $post_types as $post_type => $name ) : ?>
-						<?php $_option = ( isset( $option[$post_type] ) ) ? $option[$post_type] : false; ?>
-						<label><input type="checkbox" name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" value="true" <?php checked( 'true', $option[$post_type] ); ?>> <?php echo esc_html( $name ); ?></label><br />
-						<?php endforeach; ?>
+						<?php echo esc_html( $label ); ?>
+						&nbsp;<input name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" type="number" step="1" min="1" value="<?php echo esc_attr( $posts_per_page ); ?>" class="small-text" /> <?php _e( 'posts' ); ?>
 					</p>
+					<?php endforeach; ?>
 				</div>
 			</td>
 		</tr>
@@ -61,9 +63,10 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 			$values = array();
 		}
 		$post_types = $this->get_post_types();
+		$posts_per_page = get_option( 'posts_per_page' );
 		foreach ( $post_types as $post_type => $name ) {
 			if ( !isset( $values[$post_type] ) ) {
-				$values[$post_type] = 'false';
+				$values[$post_type] = $posts_per_page;
 			}
 		}
 		return $values;
@@ -80,9 +83,6 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 		) );
 		$post_types = array();
 		foreach ( $_post_types as $post_type ) {
-			$archive_link = get_post_type_archive_link( $post_type );
-			if ( !$archive_link )
-				continue;
 			$post_type_object = get_post_type_object( $post_type );
 			$post_types[$post_type] = $post_type_object->label;
 		}
