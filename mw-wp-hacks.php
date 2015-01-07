@@ -3,7 +3,7 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks

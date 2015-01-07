@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.3.0
+ * Version    : 1.3.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : January 6, 2015
+ * Modified   : January 7, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -382,7 +382,7 @@ class MW_WP_Hacks_Model {
 
 		if ( !empty( $social['facebook_app_id'] ) ) {
 			printf(
-				'<meta property="fb:app_id" content="%d" />',
+				'<meta property="fb:app_id" content="%s" />',
 				apply_filters( MW_WP_Hacks_Config::NAME . '-ogp-app_id', $social['facebook_app_id'] )
 			);
 		}
