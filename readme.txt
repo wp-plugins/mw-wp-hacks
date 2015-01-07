@@ -57,6 +57,9 @@ MW WP Hacks is plugin to help with development in WordPress.
 
 == Changelog ==
 
+= 1.3.1 =
+* Add "Use default" option in posts per page for custom post type settings.
+
 = 1.3.0 =
 * Remove feature: Taxonomy archive to be disabled
 * Add setting that posts per page for custom post type.
