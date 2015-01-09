@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 1.3.0
+ * Version: 1.3.3
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: January 6, 2015
+ * Modified: January 9, 2015
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -59,13 +59,13 @@ class MW_WP_Hacks {
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.manage-custom-post-type.php' );
 		include_once( plugin_dir_path( __FILE__ ) . 'classes/class.bread-crumb.php' );
 
-		add_action( 'init', array( $this, 'init' ), 11 );
+		add_action( 'after_setup_theme', array( $this, 'after_setup_theme' ), 9 );
 	}
 
 	/**
 	 * init
 	 */
-	public function init() {
+	public function after_setup_theme() {
 		$Admin                            = new MW_WP_Hacks_Admin();
 		$Setting_General                  = new MW_WP_Hacks_Setting_General();
 		$Setting_Description              = new MW_WP_Hacks_Setting_Description();

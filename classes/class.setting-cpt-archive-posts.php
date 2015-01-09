@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Setting CPT Archive Posts
  * Description: カスタム投稿タイプ及び関連するタクソノミーのアーカイブの表示件数を設定
- * Version    : 1.0.0
+ * Version    : 1.1.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : January 6, 2015
- * Modified   : 
+ * Modified   : January 7, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -32,7 +32,7 @@ class MW_WP_Hacks_Setting_CPT_Archive_Posts extends MW_WP_Hacks_Abstract_Setting
 	public function settings_page() {
 		$option = $this->get_option();
 		$post_types = $this->get_post_types();
-		$default_posts_per_page = get_option( 'posts_per_page' );
+		$posts_per_page = get_option( 'posts_per_page' );
 		if ( $post_types ) :
 		?>
 		<tr>
@@ -40,10 +40,18 @@ class MW_WP_Hacks_Setting_CPT_Archive_Posts extends MW_WP_Hacks_Abstract_Setting
 			<td>
 				<div id="<?php echo esc_attr( $this->get_name() ); ?>">
 					<?php foreach ( $post_types as $post_type => $label ) : ?>
-					<?php $posts_per_page = ( isset( $option[$post_type] ) ) ? $option[$post_type] : $default_posts_per_page; ?>
+					<?php
+					$use_default_value = ( isset( $option[$post_type] ) ) ? $option[$post_type] : 'false';
+					$number_value = ( $use_default_value === 'false' ) ? $posts_per_page : $use_default_value;
+					?>
 					<p>
 						<?php echo esc_html( $label ); ?>
-						&nbsp;<input name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" type="number" step="1" min="1" value="<?php echo esc_attr( $posts_per_page ); ?>" class="small-text" /> <?php _e( 'posts' ); ?>
+						&nbsp;<input name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" type="number" step="1" min="-1" value="<?php echo esc_attr( $number_value ); ?>" class="small-text" /> <?php _e( 'posts' ); ?>
+						&nbsp;&nbsp;
+						<label>
+							<input type="checkbox" name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" value="false" <?php checked( 'false', $use_default_value ); ?> class="<?php echo esc_attr( $this->get_name() ); ?>-use-default" />
+							<?php esc_html_e( 'Use default', 'mw-wp-hacks' ); ?>
+						</label>
 					</p>
 					<?php endforeach; ?>
 				</div>
@@ -63,10 +71,9 @@ class MW_WP_Hacks_Setting_CPT_Archive_Posts extends MW_WP_Hacks_Abstract_Setting
 			$values = array();
 		}
 		$post_types = $this->get_post_types();
-		$posts_per_page = get_option( 'posts_per_page' );
-		foreach ( $post_types as $post_type => $name ) {
-			if ( !isset( $values[$post_type] ) ) {
-				$values[$post_type] = $posts_per_page;
+		foreach ( $values as $post_type => $value ) {
+			if ( ( isset( $post_types[$post_type] ) && preg_match( '/^\-?\d+$/', $value ) ) === false ) {
+				unset( $values[$post_type] );
 			}
 		}
 		return $values;
