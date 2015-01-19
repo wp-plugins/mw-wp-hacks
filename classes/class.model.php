@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.3.0
+ * Version    : 1.3.2
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : January 6, 2015
+ * Modified   : January 19, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -382,7 +382,7 @@ class MW_WP_Hacks_Model {
 
 		if ( !empty( $social['facebook_app_id'] ) ) {
 			printf(
-				'<meta property="fb:app_id" content="%d" />',
+				'<meta property="fb:app_id" content="%s" />',
 				apply_filters( MW_WP_Hacks_Config::NAME . '-ogp-app_id', $social['facebook_app_id'] )
 			);
 		}
@@ -568,6 +568,19 @@ class MW_WP_Hacks_Model {
 					}
 					register_sidebar( $widget_args );
 				}
+			}
+		}
+	}
+
+	/**
+	 * taxonomy_archive_disable
+	 */
+	public function taxonomy_archive_disable() {
+		$option = $this->settings['Taxonomy_Archive_Disable']->get_option();
+		foreach ( $option as $taxonomy => $bool ) {
+			if ( is_tax( $taxonomy ) && $bool === 'true' ) {
+				global $wp_query;
+				$wp_query->set_404();
 			}
 		}
 	}
