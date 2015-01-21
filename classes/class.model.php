@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.3.0
+ * Version    : 1.3.3
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : January 6, 2015
+ * Modified   : January 21, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -382,7 +382,7 @@ class MW_WP_Hacks_Model {
 
 		if ( !empty( $social['facebook_app_id'] ) ) {
 			printf(
-				'<meta property="fb:app_id" content="%d" />',
+				'<meta property="fb:app_id" content="%s" />',
 				apply_filters( MW_WP_Hacks_Config::NAME . '-ogp-app_id', $social['facebook_app_id'] )
 			);
 		}
@@ -573,6 +573,19 @@ class MW_WP_Hacks_Model {
 	}
 
 	/**
+	 * taxonomy_archive_disable
+	 */
+	public function taxonomy_archive_disable() {
+		$option = $this->settings['Taxonomy_Archive_Disable']->get_option();
+		foreach ( $option as $taxonomy => $bool ) {
+			if ( is_tax( $taxonomy ) && $bool === 'true' ) {
+				global $wp_query;
+				$wp_query->set_404();
+			}
+		}
+	}
+
+	/**
 	 * redirect_archive_only_for_single
 	 */
 	public function redirect_archive_only_for_single() {
@@ -614,6 +627,22 @@ class MW_WP_Hacks_Model {
 			$post_type = $wp_query->query['post_type'];
 			if ( isset( $option[$post_type] ) && $wp_query->is_archive() ) {
 				$wp_query->set( 'posts_per_page', $option[$post_type] );
+			}
+		} else {
+			if ( is_tax() ) {
+				$queried_object = get_queried_object();
+				if ( !empty( $queried_object->taxonomy ) ) {
+					$taxonomy = get_taxonomy( $queried_object->taxonomy );
+					if ( !empty( $taxonomy->object_type ) ) {
+						$post_types = $taxonomy->object_type;
+						foreach ( $post_types as $post_type ) {
+							if ( isset( $option[$post_type] ) && $wp_query->is_archive() ) {
+								$wp_query->set( 'posts_per_page', $option[$post_type] );
+								return;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
