@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 4.1.0
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,9 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 1.3.5 =
+* Fixed a bug that posts per page setting are not reflected in taxonomy archive page.
 
 = 1.3.4 =
 * Add setting that taxonomy archive to be disabled.

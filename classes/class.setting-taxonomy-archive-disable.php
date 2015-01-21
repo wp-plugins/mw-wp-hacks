@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Setting Taxonomy Archive Disable
  * Description: カスタムタクソノミーアーカイブを無効にする
- * Version    : 1.0.0
+ * Version    : 1.0.1
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : January 19, 2015
- * Modified   :
+ * Modified   : January 19, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -78,6 +78,7 @@ class MW_WP_Hacks_Setting_Taxonomy_Archive_Disable extends MW_WP_Hacks_Abstract_
 	 */
 	private function get_taxonomies() {
 		$_taxonomies = get_taxonomies( array(
+			'public'   => false,
 			'_builtin' => false,
 		) );
 		$taxonomies = array();
