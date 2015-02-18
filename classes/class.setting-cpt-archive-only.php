@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Setting CPT Archive Only
  * Description: カスタム投稿タイプの詳細ページを無効にする
- * Version    : 1.0.2
+ * Version    : 1.0.3
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : December 22, 2014
- * Modified   : January 6, 2015
+ * Modified   : January 7, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -41,7 +41,7 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 					<p>
 						<?php foreach ( $post_types as $post_type => $name ) : ?>
 						<?php $_option = ( isset( $option[$post_type] ) ) ? $option[$post_type] : false; ?>
-						<label><input type="checkbox" name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" value="true" <?php checked( 'true', $option[$post_type] ); ?>> <?php echo esc_html( $name ); ?></label><br />
+						<label><input type="checkbox" name="<?php echo esc_attr( $this->get_name() ); ?>[<?php echo esc_attr( $post_type ); ?>]" value="true" <?php checked( 'true', $_option ); ?>> <?php echo esc_html( $name ); ?></label><br />
 						<?php endforeach; ?>
 					</p>
 				</div>
@@ -71,6 +71,8 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 
 	/**
 	 * get_post_types
+	 * アーカイブページだけ見せたいものが対象。
+	 * アーカイブもいらない場合は public => false, has_archive => true でカスタム投稿タイプを定義すれば良い。
 	 * @return array $post_types;
 	 */
 	private function get_post_types() {

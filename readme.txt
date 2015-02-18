@@ -4,7 +4,7 @@ Donate link: http://www.amazon.co.jp/registry/wishlist/39ANKRNSTNW40
 Tags: plugin, hack, setting
 Requires at least: 3.6
 Tested up to: 4.1.0
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Add Facebook AppID field in management page. IF save this, include &lt;div id="fb-root"&gt;&lt;/div&gt; any more.
 * Add GA Tracking ID field in management page. IF save this, include Google Analytics tag.
 * Add UA Tracking ID field in management page. IF save this, include Universal Analytics tag.
-* Add OGP setting.
+* Add OGP & Twitter Cards setting.
 * Add Google Site Verification setting.
 * Add Meta description setting.
 * Include any social scripts. ( Facebook, Twitter, Hatena Bookmark, Google+1 )
@@ -33,7 +33,7 @@ MW WP Hacks is plugin to help with development in WordPress.
 * Useful method: MW_WP_Hacks::pager();
 * Useful method: MW_WP_Hacks::get_top_parent_id();
 * Useful method: MW_WP_Hacks::is_custom_post_type();
-* Useful method: MW_WP_Hacks::the_localNav();
+* Useful method: MW_WP_Hacks::the_local_nav(); There is the shortcode [local_nav]
 * Useful method: MW_WP_Hacks::the_bread_crumb();
 * The Class that Register Custom Post Type and Custom taxonomy.  
   ‘‘‘
@@ -56,6 +56,27 @@ MW WP Hacks is plugin to help with development in WordPress.
 3. Do setting in settings page.
 
 == Changelog ==
+
+= 1.3.6 =
+* Refactoring bread crumb.
+* Refactoring local navigation.
+* Add shortcode [local_nav]
+* Add Twitter Cards setting.
+
+= 1.3.5 =
+* Fixed a bug that posts per page setting are not reflected in taxonomy archive page.
+
+= 1.3.4 =
+* Add setting that taxonomy archive to be disabled.
+
+= 1.3.3 =
+* Fixed a bug that widget does not display.
+
+= 1.3.2 =
+* Fixed a bug that sometimes incorrect fb:app_id is output.
+
+= 1.3.1 =
+* Add "Use default" option in posts per page for custom post type settings.
 
 = 1.3.0 =
 * Remove feature: Taxonomy archive to be disabled

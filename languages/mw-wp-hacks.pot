@@ -1,14 +1,14 @@
-# Copyright (C) 2014 MW WP Hacks
+# Copyright (C) 2015 MW WP Hacks
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 1.2.0\n"
+"Project-Id-Version: MW WP Hacks 1.4.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2014-12-22 09:31:19+00:00\n"
+"POT-Creation-Date: 2015-02-18 06:13:19+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: classes/class.bread-crumb.php:45
+#: classes/class.bread-crumb.php:125
 msgid "Page Not Found"
 msgstr ""
 
-#: classes/class.bread-crumb.php:48
+#: classes/class.bread-crumb.php:134
 msgid "Search results for \"%s\""
 msgstr ""
 
@@ -76,8 +76,20 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
-#: classes/class.setting-cpt-archive-only.php:41
+#: classes/class.setting-cpt-archive-only.php:38
 msgid "Custom post type to disable a single page"
+msgstr ""
+
+#: classes/class.setting-cpt-archive-posts.php:39
+msgid "The maximum number of posts"
+msgstr ""
+
+#: classes/class.setting-cpt-archive-posts.php:49
+msgid "posts"
+msgstr ""
+
+#: classes/class.setting-cpt-archive-posts.php:53
+msgid "Use default"
 msgstr ""
 
 #: classes/class.setting-description.php:52
@@ -152,31 +164,39 @@ msgstr ""
 msgid "Fixed the bug of the \"the_title\"."
 msgstr ""
 
-#: classes/class.setting-ogp.php:112
-msgid "OGP"
+#: classes/class.setting-ogp.php:124
+msgid "OGP & Twitter Cards"
 msgstr ""
 
-#: classes/class.setting-ogp.php:117
+#: classes/class.setting-ogp.php:129
 msgid "To update cache in facebook when publish or update."
 msgstr ""
 
-#: classes/class.setting-ogp.php:121
+#: classes/class.setting-ogp.php:133
 msgid "To generate OGP tags and use OGP settings."
 msgstr ""
 
-#: classes/class.setting-ogp.php:198
+#: classes/class.setting-ogp.php:169
+msgid "If this field is not entered , meta tags for Twitter Cards is not generated."
+msgstr ""
+
+#: classes/class.setting-ogp.php:178
+msgid "Authentication to the use of Twitter Cards is required."
+msgstr ""
+
+#: classes/class.setting-ogp.php:252
 msgid "OGP Image"
 msgstr ""
 
-#: classes/class.setting-ogp.php:227 classes/class.setting-ogp.php:263
+#: classes/class.setting-ogp.php:281 classes/class.setting-ogp.php:317
 msgid "Set OGP Image"
 msgstr ""
 
-#: classes/class.setting-ogp.php:237
+#: classes/class.setting-ogp.php:291
 msgid "Delete OGP Image"
 msgstr ""
 
-#: classes/class.setting-ogp.php:241
+#: classes/class.setting-ogp.php:295
 msgid "Recommended image size of 1200 x 630"
 msgstr ""
 
@@ -208,8 +228,12 @@ msgstr ""
 msgid "IF you input this, to generate meta tag for Google Site Verification."
 msgstr ""
 
-#: classes/class.setting-taxonomy-archive-disable.php:41
+#: classes/class.setting-taxonomy-archive-disable.php:38
 msgid "Taxonomy archive to be disabled"
+msgstr ""
+
+#: classes/class.setting-taxonomy-archive-disable.php:48
+msgid "Can be set only taxonomy is \"public => false\"."
 msgstr ""
 
 #: classes/class.setting-thumbnail.php:51
