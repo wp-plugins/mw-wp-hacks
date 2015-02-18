@@ -3,13 +3,13 @@
  * Plugin Name: MW WP Hacks
  * Plugin URI: https://github.com/inc2734/mw-wp-hacks
  * Description: MW WP Hacks is plugin to help with development in WordPress.
- * Version: 1.3.5
+ * Version: 1.4.0
  * Author: Takashi Kitajima
  * Author URI: http://2inc.org
  * Text Domain: mw-wp-hacks
  * Domain Path: /languages/
  * Created : September 30, 2013
- * Modified: January 21, 2015
+ * Modified: February 17, 2015
  * License: GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -174,6 +174,8 @@ class MW_WP_Hacks {
 
 		// CPT archive posts
 		add_action( 'pre_get_posts', array( $Model, 'posts_per_page' ) );
+
+		add_shortcode( 'local_nav', array( $this, 'shortcode_local_nav' ) );
 	}
 
 	/**
@@ -294,13 +296,35 @@ class MW_WP_Hacks {
 	}
 
 	/**
-	 * the_localNav
-	 * localNav を表示
+	 * the_local_nav
+	 * ローカルナビゲーションを表示
 	 * @param array $args
 	 */
-	public static function the_localNav( array $args = array() ) {
+	public static function the_local_nav( array $args = array() ) {
 		$Local_Nav = new MW_WP_Hacks_Local_Nav( $args );
 		$Local_Nav->display();
+	}
+	public static function the_localNav( array $args = array() ) {
+		MW_WP_Hacks::the_local_nav( $args );
+	}
+
+	/**
+	 * shortcode_local_nav
+	 * @param array $args
+	 * @return string
+	 */
+	public function shortcode_local_nav( $args, $content = '' ) {
+		$args = ( array ) $args;
+		foreach ( $args as $key => $value ) {
+			if ( $value === 'true' ) {
+				$args[$key] = true;
+			}
+			if ( $value === 'false' ) {
+				$args[$key] = false;
+			}
+		}
+		$Local_Nav = new MW_WP_Hacks_Local_Nav( $args );
+		return $Local_Nav->get();
 	}
 
 	/**

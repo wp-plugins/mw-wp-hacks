@@ -71,6 +71,8 @@ class MW_WP_Hacks_Setting_CPT_Archive_Only extends MW_WP_Hacks_Abstract_Setting 
 
 	/**
 	 * get_post_types
+	 * アーカイブページだけ見せたいものが対象。
+	 * アーカイブもいらない場合は public => false, has_archive => true でカスタム投稿タイプを定義すれば良い。
 	 * @return array $post_types;
 	 */
 	private function get_post_types() {

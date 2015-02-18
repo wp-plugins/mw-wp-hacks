@@ -2,10 +2,10 @@
 # This file is distributed under the same license as the MW WP Hacks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: MW WP Hacks 1.3.4\n"
+"Project-Id-Version: MW WP Hacks 1.4.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/mw-wp-hacks\n"
-"POT-Creation-Date: 2015-01-19 04:37:55+00:00\n"
-"PO-Revision-Date: 2015-01-19 13:40+0900\n"
+"POT-Creation-Date: 2015-02-18 06:13:19+00:00\n"
+"PO-Revision-Date: 2015-02-18 15:15+0900\n"
 "Last-Translator: Takashi Kitajima <inc@2inc.org>\n"
 "Language-Team: Takashi Kitajima <inc@2inc.org>\n"
 "Language: ja\n"
@@ -23,11 +23,11 @@ msgstr ""
 msgid "Home"
 msgstr "ホーム"
 
-#: classes/class.bread-crumb.php:45
+#: classes/class.bread-crumb.php:125
 msgid "Page Not Found"
 msgstr "ページが見つかりません"
 
-#: classes/class.bread-crumb.php:48
+#: classes/class.bread-crumb.php:134
 msgid "Search results for \"%s\""
 msgstr "「%s」の検索結果"
 
@@ -168,31 +168,42 @@ msgstr "アイキャッチ画像メタボックスにアイキャッチ画像の
 msgid "Fixed the bug of the \"the_title\"."
 msgstr "「the_title」の不具合を修正"
 
-#: classes/class.setting-ogp.php:112
-msgid "OGP"
-msgstr "OGP"
+#: classes/class.setting-ogp.php:124
+msgid "OGP & Twitter Cards"
+msgstr "OGP & Twitter Cards"
 
-#: classes/class.setting-ogp.php:117
+#: classes/class.setting-ogp.php:129
 msgid "To update cache in facebook when publish or update."
 msgstr "公開または更新したときに Facebook のキャッシュを更新する"
 
-#: classes/class.setting-ogp.php:121
+#: classes/class.setting-ogp.php:133
 msgid "To generate OGP tags and use OGP settings."
 msgstr "OGP タグを生成、OGP 設定を使用する"
 
-#: classes/class.setting-ogp.php:198
+#: classes/class.setting-ogp.php:169
+msgid ""
+"If this field is not entered , meta tags for Twitter Cards is not generated."
+msgstr ""
+"このフィールドを入力していない場合、Twitter Cards 用のメタタグは生成されませ"
+"ん。"
+
+#: classes/class.setting-ogp.php:178
+msgid "Authentication to the use of Twitter Cards is required."
+msgstr "Twitter Cards の使用には認証が必要です。"
+
+#: classes/class.setting-ogp.php:252
 msgid "OGP Image"
 msgstr "OGP画像"
 
-#: classes/class.setting-ogp.php:227 classes/class.setting-ogp.php:263
+#: classes/class.setting-ogp.php:281 classes/class.setting-ogp.php:317
 msgid "Set OGP Image"
 msgstr "OGP画像を設定"
 
-#: classes/class.setting-ogp.php:237
+#: classes/class.setting-ogp.php:291
 msgid "Delete OGP Image"
 msgstr "OGP画像を削除"
 
-#: classes/class.setting-ogp.php:241
+#: classes/class.setting-ogp.php:295
 msgid "Recommended image size of 1200 x 630"
 msgstr "推奨画像サイズ 1200 &times; 630"
 
@@ -275,3 +286,6 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://2inc.org"
 msgstr ""
+
+#~ msgid "OGP"
+#~ msgstr "OGP"

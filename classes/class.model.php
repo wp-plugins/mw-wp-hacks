@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Model
  * Description: 管理画面
- * Version    : 1.3.3
+ * Version    : 1.4.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : January 21, 2015
+ * Modified   : February 18, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -321,7 +321,7 @@ class MW_WP_Hacks_Model {
 	 * display_ogp_tags
 	 */
 	public function display_ogp_tags() {
-		$ogp = $this->settings['Ogp']->get_option();
+		$ogp    = $this->settings['Ogp']->get_option();
 		$social = $this->settings['Social']->get_option();
 
 		if ( empty( $ogp ) ) {
@@ -401,6 +401,16 @@ class MW_WP_Hacks_Model {
 			esc_url( apply_filters( MW_WP_Hacks_Config::NAME . '-ogp-url', $url ) ),
 			esc_attr( apply_filters( MW_WP_Hacks_Config::NAME . '-ogp-description', $this->get_description() ) )
 		);
+
+		if ( !empty( $ogp['twitter_site'] ) ) {
+			printf( '
+				<meta property="twitter:card" content="%s" />
+				<meta property="twitter:site" content="@%s" />
+				',
+				esc_attr( $ogp['twitter_card'] ),
+				esc_attr( $ogp['twitter_site'] )
+			);
+		}
 	}
 
 	/**

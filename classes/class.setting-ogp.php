@@ -2,11 +2,11 @@
 /**
  * Name       : MW WP Hacks Setting OGP
  * Description: 管理画面
- * Version    : 1.0.1
+ * Version    : 1.2.0
  * Author     : Takashi Kitajima
  * Author URI : http://2inc.org
  * Create     : November 13, 2014
- * Modified   : December 10, 2014
+ * Modified   : February 18, 2015
  * License    : GPLv2
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -73,6 +73,16 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 	);
 
 	/**
+	 * $card_types
+	 */
+	protected $card_types = array(
+		'summary'             => 'Summary Card',
+		'summary_large_image' => 'Summary Card with Large Images',
+		'photo'               => 'Photo Card',
+
+	);
+
+	/**
 	 * __construct()
 	 */
 	public function __construct() {
@@ -96,9 +106,11 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 	protected function set_defaults() {
 		$this->defaults = array(
 			'update_cache' => 'true',
-			'use_ogp' => 'true',
-			'type'    => 'blog',
-			'image'   => '',
+			'use_ogp'      => 'true',
+			'type'         => 'blog',
+			'image'        => '',
+			'twitter_card' => 'summary',
+			'twitter_site' => '',
 		);
 	}
 
@@ -109,7 +121,7 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 		$option = $this->get_option();
 		?>
 		<tr>
-			<th><?php _e( 'OGP', 'mw-wp-hacks' ); ?></th>
+			<th><?php _e( 'OGP & Twitter Cards', 'mw-wp-hacks' ); ?></th>
 			<td>
 				<div id="<?php echo esc_attr( $this->get_name() ); ?>">
 					<p>
@@ -139,7 +151,34 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 							<th>og:image</th>
 							<td><?php echo home_url(); ?><input type="text" name="<?php echo esc_attr( $this->get_name() ); ?>[image]" value="<?php echo esc_attr( $option['image'] ); ?>" size="30" /></td>
 						</tr>
+						<tr>
+							<th>twitter:card</th>
+							<td>
+								<select name="<?php echo esc_attr( $this->get_name() ); ?>[twitter_card]">
+									<?php foreach ( $this->card_types as $card_key => $card_value ) : ?>
+									<option value="<?php echo esc_attr( $card_key ); ?>"<?php selected( $option['twitter_card'], $card_key ); ?>><?php echo esc_html( $card_value ); ?></option>
+									<?php endforeach; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th>twitter:site</th>
+							<td>
+								@<input type="text" name="<?php echo esc_attr( $this->get_name() ); ?>[twitter_site]" value="<?php echo esc_attr( $option['twitter_site'] ); ?>" size="20" style="width: auto" />
+								<p class="description">
+									<?php esc_html_e( 'If this field is not entered , meta tags for Twitter Cards is not generated.', 'mw-wp-hacks' ); ?>
+								</p>
+							</td>
+						</tr>
 					</table>
+					<p class="description">
+						<?php
+						printf(
+							'<a href="https://cards-dev.twitter.com/validator" target="_blank">%s</a>',
+							esc_html__( 'Authentication to the use of Twitter Cards is required.', 'mw-wp-hacks' )
+						);
+						?>
+					</p>
 				</div>
 			</td>
 		</tr>
@@ -179,6 +218,21 @@ class MW_WP_Hacks_Setting_Ogp extends MW_WP_Hacks_Abstract_Setting {
 
 		if ( !isset( $values['image'] ) ) {
 			$values['image'] = $defaults['image'];
+		}
+
+		$is_valid_card_type = false;
+		foreach ( $this->card_types as $card_key => $card_value ) {
+			if ( $values['twitter_card'] === $card_key ) {
+				$is_valid_card_type = true;
+				break;
+			}
+		}
+		if ( $is_valid_card_type !== true ) {
+			$values['twitter_card'] = $defaults['twitter_card'];
+		}
+
+		if ( !isset( $values['twitter_site'] ) ) {
+			$values['twitter_site'] = $defaults['twitter_site'];
 		}
 		return $values;
 	}
